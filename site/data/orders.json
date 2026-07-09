@@ -1,0 +1,110 @@
+[
+ {
+  "id": "HBH-0001",
+  "placedAt": "2026-07-06T01:43:19.875Z",
+  "status": "preparing",
+  "name": "Farzad Khan",
+  "phone": "813 555 0182",
+  "pickupTime": "ASAP",
+  "payment": "card",
+  "notes": "Extra raita please, mild spice on the veg biryani.",
+  "lines": [
+   {
+    "id": "i001",
+    "name": "Vegetable Dam Biryani",
+    "price": 15,
+    "qty": 2
+   },
+   {
+    "id": "i004",
+    "name": "Chicken Karachi Biryani",
+    "price": 18,
+    "qty": 2
+   },
+   {
+    "id": "i003",
+    "name": "Chicken Dam Biryani",
+    "price": 16,
+    "qty": 1
+   }
+  ],
+  "subtotal": 82,
+  "cardFee": 3.28,
+  "tax": 6.15,
+  "total": 91.43
+ },
+ {
+  "id": "HBH-0002-4B7A",
+  "placedAt": "2026-07-08T10:24:52.073Z",
+  "status": "rejected",
+  "paid": false,
+  "name": "Test Customer",
+  "phone": "813 555 9999",
+  "pickupTime": "7:30 PM",
+  "payment": "cash",
+  "notes": "test order â€” reject me",
+  "lines": [
+   {
+    "id": "i003",
+    "name": "Chicken Dam Biryani",
+    "price": 16,
+    "qty": 1
+   }
+  ],
+  "subtotal": 16,
+  "cardFee": 0,
+  "tax": 1.2,
+  "total": 17.2,
+  "rejectedAt": "2026-07-08T10:25:16.803Z"
+ },
+ {
+  "id": "HBH-0003-5DF5",
+  "placedAt": "2026-07-08T10:37:48.475Z",
+  "status": "done",
+  "paid": false,
+  "name": "Lifecycle Test",
+  "phone": "813 555 7777",
+  "pickupTime": "ASAP",
+  "payment": "cash",
+  "notes": "",
+  "lines": [
+   {
+    "id": "i003",
+    "name": "Chicken Dam Biryani",
+    "price": 16,
+    "qty": 2
+   }
+  ],
+  "subtotal": 32,
+  "cardFee": 0,
+  "tax": 2.4,
+  "total": 34.4,
+  "doneAt": "2026-07-08T10:37:48.506Z",
+  "archived": true
+ },
+ {
+  "id": "HBH-0004-5E2D",
+  "placedAt": "2026-07-08T10:37:48.627Z",
+  "status": "rejected",
+  "paid": false,
+  "name": "Reason Test",
+  "phone": "813 555 6666",
+  "pickupTime": "ASAP",
+  "payment": "cash",
+  "notes": "",
+  "lines": [
+   {
+    "id": "i004",
+    "name": "Chicken Karachi Biryani",
+    "price": 18,
+    "qty": 1
+   }
+  ],
+  "subtotal": 18,
+  "cardFee": 0,
+  "tax": 1.35,
+  "total": 19.35,
+  "rejectedAt": "2026-07-08T10:37:48.635Z",
+  "rejectReason": "Out of mutton tonight"
+ }
+]

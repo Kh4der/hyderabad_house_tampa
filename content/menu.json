@@ -1,0 +1,163 @@
+{
+  "restaurant": "Hyderabad Biryani House",
+  "currency": "USD",
+  "source": "Menu boards crawled from hydbiryanihouse.com/menu, transcribed 2026-07-05",
+  "notes": [
+    "All menu items may contain Nuts / Dairy",
+    "Groups of 5 or more will be charged an automatic gratuity of 18%",
+    "Automatic gratuity of 18% for checkouts after hours of restaurant timings",
+    "Any breakage in the Restaurant's products will be charged for Replacement / Reinstallation",
+    "Menu prices show cash amounts",
+    "A 4% checkout fee will be charged for credit card usage"
+  ],
+  "categories": [
+    {
+      "name": "Biryanis",
+      "items": [
+        {"name": "Vegetable Dam Biryani", "price": 15.0, "description": "Slow cooked basmati rice with vegetables and spices"},
+        {"name": "Paneer Biryani", "price": 16.0, "description": "Fragrant Basmati rice layered with spiced paneer & mixed vegetables"},
+        {"name": "Chicken Dam Biryani", "price": 16.0, "description": "Slow cooked basmati rice with special spices & chicken"},
+        {"name": "Chicken Karachi Biryani", "price": 18.0, "description": "Fine Basmati Rice cooked with spices & chicken"},
+        {"name": "Mutton Dam Biryani", "price": 18.0, "description": "Slow cooked basmati rice with special spices & meat"},
+        {"name": "Mutton Karachi Biryani", "price": 19.0, "description": "Fine Basmati Rice cooked with spices & Mutton"},
+        {"name": "HBH Special Biryani Platter", "price": 85.0, "description": "Serves 5-6 People. Includes One Appetizer, Hyderabadi Chicken Dam Biryani, Hyderabadi Mutton Dam Biryani, Chicken Karachi Biryani, Mutton Karachi Biryani, and Hyderabadi Vegetable Biryani.", "highlight": true}
+      ]
+    },
+    {
+      "name": "Appetizers",
+      "items": [
+        {"name": "Aalu Samosa", "price": 6.0, "description": "Triangular patties stuffed with spicy potatoes"},
+        {"name": "Gobi Manchurian", "price": 13.0, "description": "Deep-fried Cauliflower florets sautéed with Manchurian sauce"},
+        {"name": "Samosa Chaat", "price": 7.0, "description": "Crushed samosas topped with chickpea & chutneys"},
+        {"name": "Bhel Puri Chaat", "price": 7.0, "description": "Indian street snack made with puffed rice, vegetables, tangy tamarind sauce, and crunchy sev"},
+        {"name": "Papdi Chaat", "price": 7.0, "description": "Crispy, tangy Indian street food made with fried dough wafers, yogurt, chutneys, and spices"},
+        {"name": "Chilli Paneer", "price": 15.0, "description": "Tossed fried paneer in sweet, sour & spicy chilli"},
+        {"name": "Chicken 65", "price": 15.0, "description": "Deep-fried boneless chicken with Ginger, garlic, lemon & onions"},
+        {"name": "Chilli Chicken", "price": 15.0, "description": "Fried boneless chicken spiced with Soy sauce & spicy Chilli"},
+        {"name": "Chicken Manchurian", "price": 15.0, "description": "Deep-fried boneless chicken stir fried in manchurian sauce"},
+        {"name": "Hyderabadi Mutton Haleem", "price": 16.0, "description": "Slow-cooked mutton stew with wheat and selected spices"},
+        {"name": "Hyderabadi Chicken Haleem", "price": 15.0, "description": "Slow cooked chicken & wheat with special spices"},
+        {"name": "Fish Fry (Whole)", "price": 22.0, "description": "Crispy, spiced fish cooked golden and served whole."}
+      ]
+    },
+    {
+      "name": "Veg Curries",
+      "note": "Served with rice",
+      "items": [
+        {"name": "Bhindi Masala", "price": 13.0, "description": "Fried Okra with select Spices."},
+        {"name": "Dal Tadka", "price": 12.0, "description": "Moong lentils cooked with tomatoes & tempered with ghee, onion, garlic & spices"},
+        {"name": "Hyderabadi Veg Qorma", "price": 13.0, "description": "Gravy made with a variety of Nuts, cooked with vegetables."},
+        {"name": "Butter Paneer", "price": 15.0, "description": "Paneer cubes cooked in creamy tomato gravy."},
+        {"name": "Paalak Paneer", "price": 15.0, "description": "Spinach cooked with Indian cheese cubes."},
+        {"name": "Mirchi Ka Salan", "price": 13.0, "description": "HBH Special masala gravy made with chilly peppers & a variety of nuts."},
+        {"name": "Paneer Tikka Masala", "price": 15.0, "description": "Paneer cubes, onion and bell peppers cooked in creamy tomato gravy"},
+        {"name": "Chana Masala", "price": 13.0, "description": "Chickpea curry made with tomatoes, onions & aromatic spices"},
+        {"name": "Matar Paneer", "price": 13.0, "description": "Green peas & paneer cooked in tomato sauce"},
+        {"name": "Aalu Paalak", "price": 13.0, "description": "Potato & Spinach cooked in select Indian spices"},
+        {"name": "Aalu Matar", "price": 13.0, "description": "Potato & Peas cooked in select Indian spices"},
+        {"name": "Bagare Baigan", "price": 16.0, "description": "Deep fried Eggplants simmered in a special gravy"},
+        {"name": "Chana Paalak", "price": 14.0, "description": "Chana & Spinach cooked in select Indian spices"},
+        {"name": "Halwa, Poori, Chole", "price": 15.0, "description": "Sweet semolina halwa, spicy chickpea curry, and crispy fried bread"},
+        {"name": "Chole Bhatura", "price": 15.0, "description": "Chickpea curry served with fried bread"},
+        {"name": "Veg Manchuria", "price": 15.0, "description": "Mix veg dumplings cooked in Manchurian sauce"}
+      ]
+    },
+    {
+      "name": "Non-Veg Curries",
+      "note": "Served with rice",
+      "items": [
+        {"name": "Dam Ka Murgh", "price": 15.0, "description": "Hyderabad special bone-in chicken slow cooked in the oven."},
+        {"name": "Chicken Tikka Masala", "price": 15.0, "description": "Chicken tikka pieces and veggies simmered in rich tomato-butter sauce"},
+        {"name": "Butter Chicken", "price": 15.0, "description": "Boneless chicken cooked in Tomato & creamy sauce with butter topped"},
+        {"name": "Hyderabadi Chicken Qorma", "price": 15.0, "description": "Chicken gravy made with variety of nuts & boneless chicken"},
+        {"name": "Chicken Paalak", "price": 15.0, "description": "Spinach & Chicken cooked with select spices"},
+        {"name": "Chicken Curry", "price": 15.0, "description": "Chef's special chicken curry with select spices"},
+        {"name": "Chicken Kofta Curry", "price": 16.0, "description": "Chicken meatballs cooked in gravy"},
+        {"name": "Mutton Paalak", "price": 17.0, "description": "Spinach & Lamb cooked with select spices"},
+        {"name": "Mutton Curry", "price": 17.0, "description": "Chef's special lamb curry with select spices"},
+        {"name": "Hyderabadi Mutton Qorma", "price": 17.0, "description": "Gravy made with variety of nuts cooked with tender lamb"}
+      ]
+    },
+    {
+      "name": "Tandoori",
+      "items": [
+        {"name": "Tandoori Chicken", "price": 12.0, "description": "Chicken legs marinated in mild herbs & selected spices cooked in clay oven"},
+        {"name": "Chicken Tikka Kabab", "price": 16.0, "description": "Chicken cubes cooked with select spices in clay oven"},
+        {"name": "Chicken Hariyali Kabab", "price": 16.0, "description": "Chicken cubes marinated in green herbs cooked in clay oven"},
+        {"name": "Chicken Malai Kabab", "price": 17.0, "description": "Chicken cubes marinated with cream and spices cooked in clay oven"},
+        {"name": "Chicken Seekh Kabab", "price": 16.0, "description": "Minced chicken skewered & cooked in clay oven"},
+        {"name": "Lamb Sheekh Kabab", "price": 19.0, "description": "Minced lamb skewered & cooked in clay oven"},
+        {"name": "Mixed Tandoori Platter", "price": 25.0, "description": "A variety of tandoori items come in one serving", "highlight": true}
+      ]
+    },
+    {
+      "name": "Naan Breads",
+      "items": [
+        {"name": "Plain Tandoori Naan", "price": 2.5},
+        {"name": "Butter Naan", "price": 3.0},
+        {"name": "Garlic Naan", "price": 3.5},
+        {"name": "Chilli Naan", "price": 3.5},
+        {"name": "Paneer Naan", "price": 5.0},
+        {"name": "Tandoori Roti", "price": 2.0},
+        {"name": "Peshawari Naan", "price": 6.0}
+      ]
+    },
+    {
+      "name": "Mandis",
+      "items": [
+        {"name": "Chicken Mandi (Serves 1)", "price": 10.0},
+        {"name": "Chicken Mandi (Serves 2)", "price": 19.0},
+        {"name": "Chicken Mandi (Serves 4)", "price": 40.0, "description": "Includes 1 chicken appetizer"},
+        {"name": "Mutton Mandi (Serves 1)", "price": 19.0},
+        {"name": "Mutton Mandi (Serves 2)", "price": 36.0},
+        {"name": "Mutton Mandi (Serves 4)", "price": 76.0, "description": "Includes 1 chicken appetizer"}
+      ]
+    },
+    {
+      "name": "Extras",
+      "items": [
+        {"name": "Extra Chicken Piece", "price": 7.0},
+        {"name": "Extra Mutton Piece", "price": 15.0},
+        {"name": "Chicken Mandi Rice", "price": 7.0},
+        {"name": "Mutton Mandi Rice", "price": 7.0},
+        {"name": "Plain Yogurt", "price": 6.0},
+        {"name": "White Rice", "price": 5.0},
+        {"name": "Biryani Rice", "price": 7.0},
+        {"name": "Biryani Chicken Piece", "price": 8.0},
+        {"name": "Extra Raita/Gravy", "price": 1.0}
+      ]
+    },
+    {
+      "name": "Ready To Go (Rolls)",
+      "items": [
+        {"name": "Butter Chicken Roll", "price": 12.0},
+        {"name": "Paneer Tikka Masala Roll", "price": 12.0},
+        {"name": "Chicken Tikka Masala Roll", "price": 12.0},
+        {"name": "Chicken Shawarma Roll", "price": 12.0}
+      ]
+    },
+    {
+      "name": "Desserts",
+      "items": [
+        {"name": "Kaddu Ki Kheer", "price": 7.0},
+        {"name": "Double Ka Meetha", "price": 6.0},
+        {"name": "Khubani Ka Meetha", "price": 7.0},
+        {"name": "Gulab Jamun", "price": 6.0},
+        {"name": "Rasmalai", "price": 6.0},
+        {"name": "Sweet Pan", "price": 3.99}
+      ]
+    },
+    {
+      "name": "Beverages",
+      "items": [
+        {"name": "Lemon Tea", "price": 2.5},
+        {"name": "HBH Special Indian Tea", "price": 3.0},
+        {"name": "Indian Coffee", "price": 4.0},
+        {"name": "Mango Lassi", "price": 6.0},
+        {"name": "Buttermilk", "price": 5.0},
+        {"name": "Canned Soda", "price": 2.5},
+        {"name": "Bottled Water", "price": 1.5}
+      ]
+    }
+  ]
+}

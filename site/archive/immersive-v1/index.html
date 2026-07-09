@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Hyderabad Biryani House | Dum Biryani in Temple Terrace, Tampa</title>
+<meta name="description" content="Hyderabadi dum biryani, mandi, and tandoori in Temple Terrace. Halal. Open daily 11 AM to 11 PM. Order pickup at (813) 988-2220." />
+<meta property="og:title" content="Hyderabad Biryani House" />
+<meta property="og:description" content="Slow fire. Sealed pot. Hyderabadi dum biryani in Temple Terrace, Tampa." />
+<meta property="og:image" content="/assets/site/hero-food-collage.webp" />
+<link rel="icon" href="/assets/site/logo-hyderabad-biryani-house.webp" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300..800&family=Archivo:wght@400;500;600&family=Spline+Sans+Mono:wght@400;500&family=Amiri:ital@1&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/css/main.css" />
+</head>
+<body>
+
+<a class="skip-link" href="#menu">Skip to menu</a>
+
+<!-- ══════════ ENTRANCE: the double doors ══════════ -->
+<div class="doors" id="doors" aria-hidden="true">
+  <div class="door door-l">
+    <span class="door-window"></span>
+  </div>
+  <div class="door door-r">
+    <span class="door-window"></span>
+  </div>
+  <img class="doors-logo" src="/assets/site/logo-hyderabad-biryani-house.webp" alt="" width="86" height="86" />
+</div>
+
+<header class="nav" id="nav">
+  <a class="nav-brand" href="#top" aria-label="Hyderabad Biryani House, home">
+    <img src="/assets/site/logo-hyderabad-biryani-house.webp" alt="" width="38" height="38" />
+    <span>Hyderabad<br/>Biryani House</span>
+  </a>
+  <nav class="nav-links" aria-label="Main">
+    <a href="#menu">Menu</a>
+    <a href="#ritual">The Ritual</a>
+    <a href="#story">Story</a>
+    <a href="#visit">Visit</a>
+  </nav>
+  <div class="nav-actions">
+    <a class="nav-phone" href="tel:+18139882220">(813) 988-2220</a>
+    <button class="btn btn-cart" id="cart-open" aria-haspopup="dialog">
+      Cart <span class="cart-count" id="cart-count" aria-label="items in cart">0</span>
+    </button>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ══════════ HERO: the thali wheel ══════════ -->
+  <section class="hero" aria-label="Signature dishes, spin the table">
+    <canvas id="dum-canvas" aria-hidden="true"></canvas>
+    <div class="hero-grid">
+      <div class="hero-dish">
+        <p class="hero-kicker">Slow fire. Sealed pot. Spin the table.</p>
+        <h1 class="dish-name" id="wheel-name" aria-live="polite">Chicken Dam Biryani</h1>
+        <p class="dish-line" id="wheel-line">Slow-steamed basmati, bone-in chicken, fried onion.</p>
+        <div class="dish-buy">
+          <span class="price price-lg" id="wheel-price">$16.00</span>
+          <button class="btn btn-primary" id="wheel-add">Add to order</button>
+        </div>
+        <ul class="wheel-nav" id="wheel-nav" aria-label="Signature dishes"></ul>
+      </div>
+      <div class="susan-zone">
+        <div class="susan" id="susan" role="group" aria-label="Rotating table of dishes. Drag to spin.">
+          <div class="susan-disc" aria-hidden="true"></div>
+          <div class="susan-plates" id="susan-plates"></div>
+        </div>
+        <p class="susan-hint" id="susan-hint">Drag the table</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ MARQUEE ══════════ -->
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track" id="marquee-track">
+      <span>Chicken Dam Biryani ✦ Mutton Mandi ✦ Hyderabadi Haleem ✦ Tandoori Chicken ✦ Chicken 65 ✦ Whole Fish Mandi ✦ Gulab Jamun ✦ Mirchi Ka Salan ✦ Chicken Malai Kabab ✦ Khubani Ka Meetha ✦ </span>
+    </div>
+  </div>
+
+  <!-- ══════════ THE RITUAL: real 3-step process, pinned ══════════ -->
+  <section class="ritual" id="ritual" aria-label="How dum biryani is made">
+    <div class="ritual-pin">
+      <div class="ritual-step is-active" data-step="1">
+        <div class="ritual-text">
+          <span class="ritual-num" aria-hidden="true">1</span>
+          <h2>Marinate</h2>
+          <p>Meat rests overnight in yogurt, saffron, and garam masala we grind ourselves.</p>
+        </div>
+        <figure class="ritual-media"><img src="/assets/site/dish-tandoori-chicken.webp" alt="Marinated tandoori chicken over biryani rice" loading="lazy" /></figure>
+      </div>
+      <div class="ritual-step" data-step="2">
+        <div class="ritual-text">
+          <span class="ritual-num" aria-hidden="true">2</span>
+          <h2>Seal</h2>
+          <p>Rice goes over the meat and the handi is capped with dough. Nothing escapes.</p>
+        </div>
+        <figure class="ritual-media"><img src="/assets/site/dish-naan-breads.webp" alt="Fresh naan dough breads" loading="lazy" /></figure>
+      </div>
+      <div class="ritual-step" data-step="3">
+        <div class="ritual-text">
+          <span class="ritual-num" aria-hidden="true">3</span>
+          <h2>Dum</h2>
+          <p>Low coals, slow steam. Rice and meat finish together, and the pot opens at your table.</p>
+        </div>
+        <figure class="ritual-media"><img src="/assets/site/dish-chicken-dam-biryani.webp" alt="Finished chicken dum biryani in a fluted bowl" loading="lazy" /></figure>
+      </div>
+      <div class="ritual-progress" aria-hidden="true"><span id="ritual-bar"></span></div>
+    </div>
+  </section>
+
+  <!-- ══════════ SPICE INDEX: what goes in the pot ══════════ -->
+  <section class="spices" id="spices" aria-label="The spices we use">
+    <div class="spices-head">
+      <h2>What goes in the pot</h2>
+      <p>Fourteen things, ground and layered by hand.</p>
+    </div>
+    <ul class="spice-index">
+      <li><span>Saffron</span><small>Zaffran</small></li>
+      <li><span>Green Cardamom</span><small>Elaichi</small></li>
+      <li><span>Cloves</span><small>Laung</small></li>
+      <li><span>Cinnamon</span><small>Dalchini</small></li>
+      <li><span>Star Anise</span><small>Badiyan</small></li>
+      <li><span>Mace</span><small>Javitri</small></li>
+      <li><span>Bay Leaf</span><small>Tej Patta</small></li>
+      <li><span>Black Cumin</span><small>Shahi Zeera</small></li>
+      <li><span>Mint</span><small>Pudina</small></li>
+      <li><span>Fried Onion</span><small>Birista</small></li>
+      <li><span>Ginger Garlic</span><small>Adrak Lehsun</small></li>
+      <li><span>Stone Flower</span><small>Patthar ke Phool</small></li>
+      <li><span>Rose Water</span><small>Gulab Jal</small></li>
+      <li><span>Kewra</span><small>Screwpine</small></li>
+    </ul>
+  </section>
+
+  <!-- ══════════ SIGNATURE DISHES: horizontal pan ══════════ -->
+  <section class="signature" id="signature" aria-label="Signature dishes">
+    <div class="signature-track" id="signature-track">
+      <article class="sig-slide sig-intro">
+        <h2>What the<br/>coals make</h2>
+        <p>Five plates people drive across Tampa for.</p>
+      </article>
+      <article class="sig-slide" data-add="chicken-dam-biryani">
+        <img src="/assets/site/dish-chicken-dam-biryani.webp" alt="Chicken dam biryani" loading="lazy" />
+        <div class="sig-meta">
+          <h3>Chicken Dam Biryani</h3>
+          <p>Slow-steamed basmati, bone-in chicken, fried onion.</p>
+          <div class="sig-buy"><span class="price">$16.00</span><button class="btn btn-add" data-id="">Add to cart</button></div>
+        </div>
+      </article>
+      <article class="sig-slide" data-add="mutton-mandi-serves-1">
+        <img src="/assets/site/dish-mutton-mandi.webp" alt="Mutton mandi platter with lamb shank" loading="lazy" />
+        <div class="sig-meta">
+          <h3>Mutton Mandi</h3>
+          <p>Lamb shank over smoked mandi rice, cashews, raisins.</p>
+          <div class="sig-buy"><span class="price">$19.00</span><button class="btn btn-add" data-id="">Add to cart</button></div>
+        </div>
+      </article>
+      <article class="sig-slide" data-add="fish-fry-whole">
+        <img src="/assets/site/dish-whole-fish-mandi.webp" alt="Whole fried fish over mandi rice" loading="lazy" />
+        <div class="sig-meta">
+          <h3>Fish Fry, Whole</h3>
+          <p>A whole fish, spiced and fried golden. Ask for it over mandi rice.</p>
+          <div class="sig-buy"><span class="price">$22.00</span><button class="btn btn-add" data-id="">Add to cart</button></div>
+        </div>
+      </article>
+      <article class="sig-slide" data-add="mixed-tandoori-platter">
+        <img src="/assets/site/dish-mixed-tandoori-platter.webp" alt="Mixed tandoori platter" loading="lazy" />
+        <div class="sig-meta">
+          <h3>Mixed Tandoori Platter</h3>
+          <p>Every kabab from the clay oven, on one thali.</p>
+          <div class="sig-buy"><span class="price">$25.00</span><button class="btn btn-add" data-id="">Add to cart</button></div>
+        </div>
+      </article>
+      <article class="sig-slide" data-add="chicken-malai-kabab">
+        <img src="/assets/site/dish-chicken-malai-kabab.webp" alt="Chicken malai kabab with mint chutney" loading="lazy" />
+        <div class="sig-meta">
+          <h3>Chicken Malai Kabab</h3>
+          <p>Cream-marinated chicken, charred soft in the tandoor.</p>
+          <div class="sig-buy"><span class="price">$17.00</span><button class="btn btn-add" data-id="">Add to cart</button></div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ══════════ FULL MENU ══════════ -->
+  <section class="menu" id="menu" aria-label="Full menu and ordering">
+    <div class="menu-head">
+      <h2>The whole menu</h2>
+      <p>Ninety-one things we actually make. Tap a card to add it to your pickup order.</p>
+    </div>
+    <div class="menu-tabs" id="menu-tabs" role="tablist" aria-label="Menu categories"></div>
+    <div class="menu-grid" id="menu-grid" aria-live="polite"></div>
+  </section>
+
+  <!-- ══════════ STORY ══════════ -->
+  <section class="story" id="story" aria-label="Our story">
+    <span class="story-urdu" aria-hidden="true">حیدرآباد</span>
+    <div class="story-inner">
+      <div class="story-copy">
+        <h2>From Hyderabad<br/>to Temple Terrace</h2>
+        <p>Our recipes come from kitchens where saffron, slow-cooked rice, and hand-ground spice brought whole families to one table. We have served them in Tampa for over ten years.</p>
+        <p>Every curry is made fresh daily. Every biryani steams sealed. That is not a slogan, it is just how dum works.</p>
+        <p class="story-halal">Fully halal, always.</p>
+      </div>
+      <figure class="story-photo">
+        <img src="/assets/site/storefront-temple-terrace.webp" alt="Hyderabad Biryani House storefront on East Fowler Avenue" loading="lazy" />
+        <figcaption>6810 E Fowler Ave, Temple Terrace</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ══════════ VISIT ══════════ -->
+  <section class="visit" id="visit" aria-label="Location and hours">
+    <div class="visit-grid">
+      <div class="visit-block">
+        <h2>Come hungry</h2>
+        <address>
+          6810 E Fowler Ave<br/>Temple Terrace, FL 33617
+        </address>
+        <a class="btn btn-primary" href="https://maps.google.com/?q=Hyderabad+Biryani+House+6810+E+Fowler+Ave+Temple+Terrace+FL" target="_blank" rel="noopener">Get directions</a>
+      </div>
+      <div class="visit-block">
+        <h3>Hours</h3>
+        <p class="visit-hours">Open every day<br/><strong>11:00 AM to 11:00 PM</strong></p>
+        <h3>Pickup orders</h3>
+        <p><a href="tel:+18139882220">(813) 988-2220</a></p>
+      </div>
+      <div class="visit-block visit-fine">
+        <h3>Good to know</h3>
+        <ul>
+          <li>Menu prices are cash prices. Cards add a 4% checkout fee.</li>
+          <li>Groups of five or more: 18% gratuity.</li>
+          <li>Dishes may contain nuts or dairy. Ask us.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <p class="footer-word" aria-hidden="true">Hyderabad Biryani House</p>
+  <div class="footer-grid">
+    <div class="footer-col footer-brand">
+      <img src="/assets/site/logo-hyderabad-biryani-house.webp" alt="Hyderabad Biryani House logo" width="52" height="52" />
+      <p>Dum biryani, mandi, and tandoori.<br/>Halal, always.</p>
+    </div>
+    <div class="footer-col">
+      <h3>Find us</h3>
+      <p>6810 E Fowler Ave<br/>Temple Terrace, FL 33617</p>
+      <p><a href="tel:+18139882220">(813) 988-2220</a></p>
+    </div>
+    <div class="footer-col">
+      <h3>Hours</h3>
+      <p>Every day<br/>11:00 AM to 11:00 PM</p>
+    </div>
+    <div class="footer-col">
+      <h3>Follow</h3>
+      <p><a href="https://www.instagram.com/hbh_tampabay/" target="_blank" rel="noopener">Instagram</a></p>
+      <p><a href="https://www.facebook.com/HBHTampa/" target="_blank" rel="noopener">Facebook</a></p>
+    </div>
+  </div>
+  <p class="footer-legal">Hyderabad Biryani House. Menu prices are cash prices; cards add a 4% checkout fee.</p>
+</footer>
+
+<!-- ══════════ CART DRAWER ══════════ -->
+<div class="drawer-scrim" id="drawer-scrim" hidden></div>
+<aside class="drawer" id="cart-drawer" role="dialog" aria-modal="true" aria-label="Your pickup order" hidden>
+  <div class="drawer-head">
+    <h2 id="drawer-title">Your order</h2>
+    <button class="btn-x" id="cart-close" aria-label="Close cart">✕</button>
+  </div>
+
+  <div class="drawer-body" id="drawer-view-cart">
+    <ul class="cart-lines" id="cart-lines"></ul>
+    <div class="cart-empty" id="cart-empty">
+      <p>Nothing here yet.</p>
+      <button class="btn btn-ghost" id="cart-browse">Browse the menu</button>
+    </div>
+  </div>
+
+  <form class="drawer-body" id="drawer-view-checkout" hidden novalidate>
+    <h3>Pickup details</h3>
+    <div class="field">
+      <label for="f-name">Your name</label>
+      <input id="f-name" name="name" type="text" autocomplete="name" required maxlength="80" />
+      <span class="field-err" id="err-name"></span>
+    </div>
+    <div class="field">
+      <label for="f-phone">Phone</label>
+      <input id="f-phone" name="phone" type="tel" autocomplete="tel" required maxlength="25" />
+      <span class="field-err" id="err-phone"></span>
+    </div>
+    <div class="field">
+      <label for="f-time">Pickup time</label>
+      <select id="f-time" name="pickupTime"></select>
+    </div>
+    <fieldset class="field field-pay">
+      <legend>Payment at pickup</legend>
+      <label class="pay-opt"><input type="radio" name="payment" value="cash" checked /> Cash</label>
+      <label class="pay-opt"><input type="radio" name="payment" value="card" /> Card <small>(adds 4% fee)</small></label>
+    </fieldset>
+    <div class="field">
+      <label for="f-notes">Notes for the kitchen <small>(optional)</small></label>
+      <textarea id="f-notes" name="notes" rows="2" maxlength="500" placeholder=""></textarea>
+    </div>
+  </form>
+
+  <div class="drawer-body drawer-success" id="drawer-view-success" hidden>
+    <div class="success-mark" aria-hidden="true">✓</div>
+    <h3>Order in. The pot is on.</h3>
+    <p id="success-detail"></p>
+    <p class="success-sub">Show your name at the counter. Call <a href="tel:+18139882220">(813) 988-2220</a> to change anything.</p>
+    <button class="btn btn-primary" id="success-done">Back to the menu</button>
+  </div>
+
+  <div class="drawer-foot" id="drawer-foot">
+    <dl class="totals" id="totals">
+      <div><dt>Subtotal</dt><dd id="t-sub">$0.00</dd></div>
+      <div id="t-fee-row" hidden><dt>Card fee (4%)</dt><dd id="t-fee">$0.00</dd></div>
+      <div><dt>Tax (7.5%)</dt><dd id="t-tax">$0.00</dd></div>
+      <div class="totals-grand"><dt>Total</dt><dd id="t-total">$0.00</dd></div>
+    </dl>
+    <button class="btn btn-primary btn-wide" id="cart-next">Checkout</button>
+    <button class="btn btn-ghost btn-wide" id="cart-back" hidden>Back to cart</button>
+  </div>
+</aside>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div class="grain" aria-hidden="true"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<script type="importmap">{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js" } }</script>
+<script type="module" src="/js/hero.js"></script>
+<script src="/js/plate.js" defer></script>
+<script src="/js/main.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>HBH Kitchen | Orders</title>
+<meta name="robots" content="noindex" />
+<link rel="icon" href="/assets/logo/logo-square.webp" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..700&family=Archivo:wght@400;500;600&family=Spline+Sans+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/css/admin.css" />
+</head>
+<body>
+
+<!-- ── PIN gate: one box, the PIN decides the role ── -->
+<div class="gate" id="gate">
+  <form class="gate-card" id="gate-form">
+    <img src="/assets/logo/logo-mark.webp" alt="" width="52" height="52" />
+    <h1>Kitchen dashboard</h1>
+    <label for="pin">Staff PIN</label>
+    <input id="pin" type="password" inputmode="numeric" autocomplete="off" maxlength="8" />
+    <p class="gate-err" id="gate-err"></p>
+    <button class="btn btn-primary" type="submit">Sign in</button>
+    <p class="gate-hint">Admin and employee use different PINs.</p>
+  </form>
+</div>
+
+<!-- ── dashboard ── -->
+<div class="dash" id="dash" hidden>
+  <header class="dash-top">
+    <div class="dash-brand">
+      <img src="/assets/logo/logo-mark.webp" alt="" width="34" height="34" />
+      <strong>HBH Kitchen</strong>
+      <span class="role-chip" id="role-chip"></span>
+    </div>
+    <nav class="dash-tabs">
+      <button class="dtab is-on" data-panel="orders">Orders</button>
+      <button class="dtab" data-panel="receipts">Receipts</button>
+      <button class="dtab admin-only" data-panel="menu" hidden>Menu &amp; prices</button>
+      <button class="dtab admin-only" data-panel="sales" hidden>Sales</button>
+    </nav>
+    <div class="dash-stats" id="dash-stats">
+      <span><b id="s-open">0</b> open</span>
+      <span><b id="s-today">0</b> today</span>
+      <span class="admin-only" hidden><b id="s-revenue">$0</b> today</span>
+    </div>
+    <button class="btn btn-ghost btn-icon" id="sound-toggle" title="New-order sound alerts">🔔</button>
+    <button class="btn btn-ghost admin-only" id="ordering-toggle" hidden>Ordering: …</button>
+    <button class="btn btn-ghost" id="signout">Sign out</button>
+  </header>
+
+  <!-- orders board -->
+  <main class="panel" id="panel-orders">
+    <div class="board">
+      <section class="col" data-status="new">
+        <h2>New <span class="col-n" id="n-new">0</span></h2>
+        <div class="col-list" id="col-new"></div>
+      </section>
+      <section class="col" data-status="preparing">
+        <h2>Preparing <span class="col-n" id="n-preparing">0</span></h2>
+        <div class="col-list" id="col-preparing"></div>
+      </section>
+      <section class="col" data-status="ready">
+        <h2>Ready <span class="col-n" id="n-ready">0</span></h2>
+        <div class="col-list" id="col-ready"></div>
+      </section>
+      <section class="col" data-status="done">
+        <h2>Done <span class="col-n" id="n-done">0</span>
+          <button class="btn-clear-all" id="clear-done" title="Clear all picked-up orders off the board">Clear all</button>
+        </h2>
+        <div class="col-list" id="col-done"></div>
+      </section>
+    </div>
+  </main>
+
+  <!-- receipts -->
+  <main class="panel" id="panel-receipts" hidden>
+    <div class="receipts-bar">
+      <input id="receipt-search" type="search" placeholder="Search by order ID, name, or phone…" />
+      <select id="receipt-filter">
+        <option value="all">All orders</option>
+        <option value="done">Completed</option>
+        <option value="rejected">Rejected</option>
+        <option value="open">Still open</option>
+      </select>
+    </div>
+    <div id="receipt-list" class="receipt-list"></div>
+  </main>
+
+  <!-- menu & prices (admin) -->
+  <main class="panel" id="panel-menu" hidden>
+    <p class="panel-hint">Change a price and press Enter (or click away) to save. Flip an item off and it shows as sold out on the site within seconds. Use “Image” to pick a new photo.</p>
+    <div id="menu-list"></div>
+  </main>
+
+  <!-- sales dashboard (admin) -->
+  <main class="panel" id="panel-sales" hidden>
+    <div class="sales-actions">
+      <button class="btn btn-ghost" id="export-csv">Export all orders (CSV)</button>
+    </div>
+    <div class="stat-cards" id="stat-cards"></div>
+    <div class="sales-grid">
+      <section class="sales-card sales-wide">
+        <h2>Revenue, last 14 days</h2>
+        <canvas id="chart-days" height="220"></canvas>
+      </section>
+      <section class="sales-card">
+        <h2>Top dishes</h2>
+        <div id="top-items"></div>
+      </section>
+      <section class="sales-card">
+        <h2>Orders by hour</h2>
+        <canvas id="chart-hours" height="180"></canvas>
+      </section>
+      <section class="sales-card">
+        <h2>Payment split</h2>
+        <div id="pay-split"></div>
+      </section>
+    </div>
+  </main>
+</div>
+
+<!-- image picker dialog -->
+<div class="picker-scrim" id="picker-scrim" hidden></div>
+<div class="picker" id="picker" role="dialog" aria-modal="true" aria-label="Choose an image" hidden>
+  <div class="picker-head">
+    <h2 id="picker-title">Choose an image</h2>
+    <label class="btn btn-primary picker-upload">
+      Upload new photo
+      <input type="file" id="picker-file" accept="image/webp,image/jpeg,image/png" hidden />
+    </label>
+    <button class="btn-x" id="picker-close" aria-label="Close">✕</button>
+  </div>
+  <div class="picker-grid" id="picker-grid"></div>
+</div>
+
+<script src="/js/admin.js" defer></script>
+</body>
+</html>

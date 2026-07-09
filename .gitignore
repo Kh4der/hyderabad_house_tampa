@@ -1,0 +1,14 @@
+# deps / local state
+node_modules/
+.vercel/
+*.log
+
+# heavy raw source material (not needed to run the site)
+assets/original/
+assets/Vedios/
+assets/social/original/
+assets/enhanced/
+crawl/
+
+# local tooling
+.claude/

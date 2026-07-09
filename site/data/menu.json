@@ -1,0 +1,989 @@
+{
+ "restaurant": "Hyderabad Biryani House",
+ "notes": [
+  "All menu items may contain Nuts / Dairy",
+  "Groups of 5 or more will be charged an automatic gratuity of 18%",
+  "Automatic gratuity of 18% for checkouts after hours of restaurant timings",
+  "Any breakage in the Restaurant's products will be charged for Replacement / Reinstallation",
+  "Menu prices show cash amounts",
+  "A 4% checkout fee will be charged for credit card usage"
+ ],
+ "categories": [
+  {
+   "name": "Biryanis",
+   "note": null,
+   "items": [
+    {
+     "id": "i001",
+     "slug": "vegetable-dam-biryani",
+     "name": "Vegetable Dam Biryani",
+     "price": 15,
+     "description": "Slow cooked basmati rice with vegetables and spices",
+     "image": "/assets/dishes/vegetable-dam-biryani--ig-DND7klmPsBT.webp",
+     "available": true,
+     "highlight": false
+    },
+    {
+     "id": "i002",
+     "slug": "paneer-biryani",
+     "name": "Paneer Biryani",
+     "price": 16,
+     "description": "Fragrant Basmati rice layered with spiced paneer & mixed vegetables",
+     "image": "/assets/stock/paneer-biryani.webp",
+     "available": true,
+     "highlight": false
+    },
+    {
+     "id": "i003",
+     "slug": "chicken-dam-biryani",
+     "name": "Chicken Dam Biryani",
+     "price": 16,
+     "description": "Slow cooked basmati rice with special spices & chicken",
+     "image": "/assets/site/dish-chicken-dam-biryani.webp",
+     "available": true,
+     "highlight": false
+    },
+    {
+     "id": "i004",
+     "slug": "chicken-karachi-biryani",
+     "name": "Chicken Karachi Biryani",
+     "price": 18,
+     "description": "Fine Basmati Rice cooked with spices & chicken",
+     "image": "/assets/dishes/chicken-karachi-biryani-2--ig-C0O4dcxqY1Q.webp",
+     "available": true,
+     "highlight": false
+    },
+    {
+     "id": "i005",
+     "slug": "mutton-dam-biryani",
+     "name": "Mutton Dam Biryani",
+     "price": 18,
+     "description": "Slow cooked basmati rice with special spices & meat",
+     "image": "/assets/dishes/mutton-dam-biryani--ig-DPtjcgeDgAx.webp",
+     "available": true,
+     "highlight": false
+    },
+    {
+     "id": "i006",
+     "slug": "mutton-karachi-biryani",
+     "name": "Mutton Karachi Biryani",
+     "price": 19,
+     "description": "Fine Basmati Rice cooked with spices & Mutton",
+     "image": "/assets/dishes/mutton-karachi-biryani--ig-DaEF5NzoGr7.webp",
+     "available": true,
+     "highlight": false
+    },
+    {
+     "id": "i007",
+     "slug": "hbh-special-biryani-platter",
+     "name": "HBH Special Biryani Platter",
+     "price": 85,
+     "description": "Serves 5-6 People. Includes One Appetizer, Hyderabadi Chicken Dam Biryani, Hyderabadi Mutton Dam Biryani, Chicken Karachi Biryani, Mutton Karachi Biryani, and Hyderabadi Vegetable Biryani.",
+     "image": "/assets/dishes/hbh-special-biryani-platter--ig-DNvYeMoUFBA.webp",
+     "available": true,
+     "highlight": true
+    }
+   ]
+  },
+  {
+   "name": "Appetizers",
+   "note": null,
+   "items": [
+    {
+     "id": "i008",
+     "slug": "aalu-samosa",
+     "name": "Aalu Samosa",
+     "price": 6,
+     "description": "Triangular patties stuffed with spicy potatoes",
+     "image": "/assets/dishes/aalu-samosa--ig-DPBx3J6CI7E.webp",
+     "available": true,
+     "highlight": false
+    },
+    {
+     "id": "i009",
+     "slug": "gobi-manchurian",
+     "name": "Gobi Manchurian",
+     "price": 13,
+     "description": "Deep-fried Cauliflower florets sautéed with Manchurian sauce",
+     "image": "/assets/stock/gobi-manchurian.webp",
+     "available": true,
+     "highlight": false
+    },
+    {
+     "id": "i010",
+     "slug": "samosa-chaat",
+     "name": "Samosa Chaat",
+     "price": 7,
+     "description": "Crushed samosas topped with chickpea & chutneys",
+     "image": "/assets/stock/samosa-chaat.webp",
+     "available": true,
+     "highlight": false
+    },
+    {
+     "id": "i011",
+     "slug": "bhel-puri-chaat",
+     "name": "Bhel Puri Chaat",
+     "price": 7,
+     "description": "Indian street snack made with puffed rice, vegetables, tangy tamarind sauce, and crunchy sev",
+     "image": "/assets/stock/bhel-puri-chaat.webp",
+     "available": true,
+     "highlight": false
+    },
+    {
+     "id": "i012",
+     "slug": "papdi-chaat",
+     "name": "Papdi Chaat",
+     "price": 7,
+     "description": "Crispy, tangy Indian street food made with fried dough wafers, yogurt, chutneys, and spices",
+     "image": "/assets/stock/papdi-chaat.webp",
+     "available": true,
+     "highlight": false
+    },
+    {
+     "id": "i013",
+     "slug": "chilli-paneer",
+     "name": "Chilli Paneer",
+     "price": 15,
+     "description": "Tossed fried paneer in sweet, sour & spicy chilli",
+     "image": "/assets/dishes/chilli-paneer--ig-DW4ZpyhD8Y-.webp",
+     "available": true,
+     "highlight": false
+    },
+    {
+     "id": "i014",
+     "slug": "chicken-65",
+     "name": "Chicken 65",
+     "price": 15,
+     "description": "Deep-fried boneless chicken with Ginger, garlic, lemon & onions",
+     "image": "/assets/dishes/chicken-biryani--ig-DXm7SP1FewY.webp",
+     "available": true,
+     "highlight": false
+    },
+    {
+     "id": "i015",
+     "slug": "chilli-chicken",
+     "name": "Chilli Chicken",
+     "price": 15,
+     "description": "Fried boneless chicken spiced with Soy sauce & spicy Chilli",
+     "image": "/assets/dishes/chilli-paneer--ig-DW4ZpyhD8Y-.webp",
+     "available": true,
+     "highlight": false
+    },
+    {
+     "id": "i016",
+     "slug": "chicken-manchurian",
+     "name": "Chicken Manchurian",
+     "price": 15,
+     "description": "Deep-fried boneless chicken stir fried in manchurian sauce",
+     "image": "/assets/dishes/chicken-biryani--ig-DXm7SP1FewY.webp",
+     "available": true,
+     "highlight": false
+    },
+    {
+     "id": "i017",
+     "slug": "hyderabadi-mutton-haleem",
+     "name": "Hyderabadi Mutton Haleem",
+     "price": 16,
+     "description": "Slow-cooked mutton stew with wheat and selected spices",
+     "image": "/assets/dishes/hyderabadi-haleem--ig-DPjQNtUAvH3.webp",
+     "available": true,
+     "highlight": false
+    },
+    {
+     "id": "i018",
+     "slug": "hyderabadi-chicken-haleem",
+     "name": "Hyderabadi Chicken Haleem",
+     "price": 15,
+     "description": "Slow cooked chicken & wheat with special spices",
+     "image": "/assets/dishes/hyderabadi-haleem--ig-DPjQNtUAvH3.webp",
+     "available": true,
+     "highlight": false
+    },
+    {
+     "id": "i019",
+     "slug": "fish-fry-whole",
+     "name": "Fish Fry (Whole)",
+     "price": 22,
+     "description": "Crispy, spiced fish cooked golden and served whole.",
+     "image": "/assets/dishes/fish-fry--ig-DZNznaTDWbg.webp",
+     "available": true,
+     "highlight": false
+    }
+   ]
+  },
+  {
+   "name": "Veg Curries",
+   "note": "Served with rice",
+   "items": [
+    {
+     "id": "i020",
+     "slug": "bhindi-masala",
+     "name": "Bhindi Masala",
+     "price": 13,
+     "description": "Fried Okra with select Spices.",
+     "image": "/assets/stock/bhindi-masala.webp",
+     "available": true,
+     "highlight": false
+    },
+    {
+     "id": "i021",
+     "slug": "dal-tadka",
+     "name": "Dal Tadka",
+     "price": 12,
+     "description": "Moong lentils cooked with tomatoes & tempered with ghee, onion, garlic & spices",
+     "image": "/assets/stock/dal-tadka.webp",
+     "available": true,
+     "highlight": false
+    },
+    {
+     "id": "i022",
+     "slug": "hyderabadi-veg-qorma",
+     "name": "Hyderabadi Veg Qorma",
+     "price": 13,
+     "description": "Gravy made with a variety of Nuts, cooked with vegetables.",
+     "image": "/assets/stock/hyderabadi-veg-qorma.webp",
+     "available": true,
+     "highlight": false
+    },
+    {
+     "id": "i023",
+     "slug": "butter-paneer",
+     "name": "Butter Paneer",
+     "price": 15,
+     "description": "Paneer cubes cooked in creamy tomato gravy.",
+     "image": "/assets/stock/butter-paneer.webp",
+     "available": true,
+     "highlight": false
+    },
+    {
+     "id": "i024",
+     "slug": "paalak-paneer",
+     "name": "Paalak Paneer",
+     "price": 15,
+     "description": "Spinach cooked with Indian cheese cubes.",
+     "image": "/assets/stock/paalak-paneer.webp",
+     "available": true,
+     "highlight": false
+    },
+    {
+     "id": "i025",
+     "slug": "mirchi-ka-salan",
+     "name": "Mirchi Ka Salan",
+     "price": 13,
+     "description": "HBH Special masala gravy made with chilly peppers & a variety of nuts.",
+     "image": "/assets/stock/mirchi-ka-salan.webp",
+     "available": true,
+     "highlight": false
+    },
+    {
+     "id": "i026",
+     "slug": "paneer-tikka-masala",
+     "name": "Paneer Tikka Masala",
+     "price": 15,
+     "description": "Paneer cubes, onion and bell peppers cooked in creamy tomato gravy",
+     "image": "/assets/dishes/paneer-tikka-masala--ig-DMktbHWxDT7.webp",
+     "available": true,
+     "highlight": false
+    },
+    {
+     "id": "i027",
+     "slug": "chana-masala",
+     "name": "Chana Masala",
+     "price": 13,
+     "description": "Chickpea curry made with tomatoes, onions & aromatic spices",
+     "image": "/assets/stock/chana-masala.webp",
+     "available": true,
+     "highlight": false
+    },
+    {
+     "id": "i028",
+     "slug": "matar-paneer",
+     "name": "Matar Paneer",
+     "price": 13,
+     "description": "Green peas & paneer cooked in tomato sauce",
+     "image": "/assets/stock/matar-paneer.webp",
+     "available": true,
+     "highlight": false
+    },
+    {
+     "id": "i029",
+     "slug": "aalu-paalak",
+     "name": "Aalu Paalak",
+     "price": 13,
+     "description": "Potato & Spinach cooked in select Indian spices",
+     "image": "/assets/stock/aalu-paalak.webp",
+     "available": true,
+     "highlight": false
+    },
+    {
+     "id": "i030",
+     "slug": "aalu-matar",
+     "name": "Aalu Matar",
+     "price": 13,
+     "description": "Potato & Peas cooked in select Indian spices",
+     "image": "/assets/stock/aalu-matar.webp",
+     "available": true,
+     "highlight": false
+    },
+    {
+     "id": "i031",
+     "slug": "bagare-baigan",
+     "name": "Bagare Baigan",
+     "price": 16,
+     "description": "Deep fried Eggplants simmered in a special gravy",
+     "image": "/assets/dishes/bagare-baigan--ig-DO8oP6rCGKl.webp",
+     "available": true,
+     "highlight": false
+    },
+    {
+     "id": "i032",
+     "slug": "chana-paalak",
+     "name": "Chana Paalak",
+     "price": 14,
+     "description": "Chana & Spinach cooked in select Indian spices",
+     "image": "/assets/stock/chana-paalak.webp",
+     "available": true,
+     "highlight": false
+    },
+    {
+     "id": "i033",
+     "slug": "halwa-poori-chole",
+     "name": "Halwa, Poori, Chole",
+     "price": 15,
+     "description": "Sweet semolina halwa, spicy chickpea curry, and crispy fried bread",
+     "image": "/assets/stock/halwa-poori-chole.webp",
+     "available": true,
+     "highlight": false
+    },
+    {
+     "id": "i034",
+     "slug": "chole-bhatura",
+     "name": "Chole Bhatura",
+     "price": 15,
+     "description": "Chickpea curry served with fried bread",
+     "image": "/assets/stock/chole-bhatura.webp",
+     "available": true,
+     "highlight": false
+    },
+    {
+     "id": "i035",
+     "slug": "veg-manchuria",
+     "name": "Veg Manchuria",
+     "price": 15,
+     "description": "Mix veg dumplings cooked in Manchurian sauce",
+     "image": "/assets/dishes/veg-manchurian--ig-DUB2m3ZDz64.webp",
+     "available": true,
+     "highlight": false
+    }
+   ]
+  },
+  {
+   "name": "Non-Veg Curries",
+   "note": "Served with rice",
+   "items": [
+    {
+     "id": "i036",
+     "slug": "dam-ka-murgh",
+     "name": "Dam Ka Murgh",
+     "price": 15,
+     "description": "Hyderabad special bone-in chicken slow cooked in the oven.",
+     "image": "/assets/stock/dam-ka-murgh.webp",
+     "available": true,
+     "highlight": false
+    },
+    {
+     "id": "i037",
+     "slug": "chicken-tikka-masala",
+     "name": "Chicken Tikka Masala",
+     "price": 15,
+     "description": "Chicken tikka pieces and veggies simmered in rich tomato-butter sauce",
+     "image": "/assets/dishes/chicken-tikka-masala--ig-DZtEgWtEQGD.webp",
+     "available": true,
+     "highlight": false
+    },
+    {
+     "id": "i038",
+     "slug": "butter-chicken",
+     "name": "Butter Chicken",
+     "price": 15,
+     "description": "Boneless chicken cooked in Tomato & creamy sauce with butter topped",
+     "image": "/assets/dishes/chicken-65--ig-DPOp4dWjSsb.webp",
+     "available": true,
+     "highlight": false
+    },
+    {
+     "id": "i039",
+     "slug": "hyderabadi-chicken-qorma",
+     "name": "Hyderabadi Chicken Qorma",
+     "price": 15,
+     "description": "Chicken gravy made with variety of nuts & boneless chicken",
+     "image": "/assets/dishes/chicken-biryani--ig-DXm7SP1FewY.webp",
+     "available": true,
+     "highlight": false
+    },
+    {
+     "id": "i040",
+     "slug": "chicken-paalak",
+     "name": "Chicken Paalak",
+     "price": 15,
+     "description": "Spinach & Chicken cooked with select spices",
+     "image": "/assets/dishes/chicken-biryani--ig-DXm7SP1FewY.webp",
+     "available": true,
+     "highlight": false
+    },
+    {
+     "id": "i041",
+     "slug": "chicken-curry",
+     "name": "Chicken Curry",
+     "price": 15,
+     "description": "Chef's special chicken curry with select spices",
+     "image": "/assets/dishes/chicken-curry--ig-DZBJaTIDdq7.webp",
+     "available": true,
+     "highlight": false
+    },
+    {
+     "id": "i042",
+     "slug": "chicken-kofta-curry",
+     "name": "Chicken Kofta Curry",
+     "price": 16,
+     "description": "Chicken meatballs cooked in gravy",
+     "image": "/assets/dishes/chicken-65--ig-DPOp4dWjSsb.webp",
+     "available": true,
+     "highlight": false
+    },
+    {
+     "id": "i043",
+     "slug": "mutton-paalak",
+     "name": "Mutton Paalak",
+     "price": 17,
+     "description": "Spinach & Lamb cooked with select spices",
+     "image": "/assets/dishes/mutton-curry--ig-DWrPMiLj4Y0.webp",
+     "available": true,
+     "highlight": false
+    },
+    {
+     "id": "i044",
+     "slug": "mutton-curry",
+     "name": "Mutton Curry",
+     "price": 17,
+     "description": "Chef's special lamb curry with select spices",
+     "image": "/assets/dishes/mutton-curry--ig-DWrPMiLj4Y0.webp",
+     "available": true,
+     "highlight": false
+    },
+    {
+     "id": "i045",
+     "slug": "hyderabadi-mutton-qorma",
+     "name": "Hyderabadi Mutton Qorma",
+     "price": 17,
+     "description": "Gravy made with variety of nuts cooked with tender lamb",
+     "image": "/assets/dishes/hyderabadi-mutton-qorma--ig-DK1_LS5Bq3K.webp",
+     "available": true,
+     "highlight": false
+    }
+   ]
+  },
+  {
+   "name": "Tandoori",
+   "note": null,
+   "items": [
+    {
+     "id": "i046",
+     "slug": "tandoori-chicken",
+     "name": "Tandoori Chicken",
+     "price": 12,
+     "description": "Chicken legs marinated in mild herbs & selected spices cooked in clay oven",
+     "image": "/assets/site/dish-tandoori-chicken.webp",
+     "available": true,
+     "highlight": false
+    },
+    {
+     "id": "i047",
+     "slug": "chicken-tikka-kabab",
+     "name": "Chicken Tikka Kabab",
+     "price": 16,
+     "description": "Chicken cubes cooked with select spices in clay oven",
+     "image": "/assets/dishes/chicken-tikka-kabab--ig-DXxZzBcibme.webp",
+     "available": true,
+     "highlight": false
+    },
+    {
+     "id": "i048",
+     "slug": "chicken-hariyali-kabab",
+     "name": "Chicken Hariyali Kabab",
+     "price": 16,
+     "description": "Chicken cubes marinated in green herbs cooked in clay oven",
+     "image": "/assets/dishes/chicken-hariyali-kabab--ig-DVR8Qanj3rr.webp",
+     "available": true,
+     "highlight": false
+    },
+    {
+     "id": "i049",
+     "slug": "chicken-malai-kabab",
+     "name": "Chicken Malai Kabab",
+     "price": 17,
+     "description": "Chicken cubes marinated with cream and spices cooked in clay oven",
+     "image": "/assets/site/dish-chicken-malai-kabab.webp",
+     "available": true,
+     "highlight": false
+    },
+    {
+     "id": "i050",
+     "slug": "chicken-seekh-kabab",
+     "name": "Chicken Seekh Kabab",
+     "price": 16,
+     "description": "Minced chicken skewered & cooked in clay oven",
+     "image": "/assets/dishes/chicken-65--ig-DPOp4dWjSsb.webp",
+     "available": true,
+     "highlight": false
+    },
+    {
+     "id": "i051",
+     "slug": "lamb-sheekh-kabab",
+     "name": "Lamb Sheekh Kabab",
+     "price": 19,
+     "description": "Minced lamb skewered & cooked in clay oven",
+     "image": "/assets/dishes/chicken-tikka-kabab--ig-DXxZzBcibme.webp",
+     "available": true,
+     "highlight": false
+    },
+    {
+     "id": "i052",
+     "slug": "mixed-tandoori-platter",
+     "name": "Mixed Tandoori Platter",
+     "price": 25,
+     "description": "A variety of tandoori items come in one serving",
+     "image": "/assets/site/dish-mixed-tandoori-platter.webp",
+     "available": true,
+     "highlight": true
+    }
+   ]
+  },
+  {
+   "name": "Naan Breads",
+   "note": null,
+   "items": [
+    {
+     "id": "i053",
+     "slug": "plain-tandoori-naan",
+     "name": "Plain Tandoori Naan",
+     "price": 2.5,
+     "description": "",
+     "image": "/assets/site/dish-naan-breads.webp",
+     "available": true,
+     "highlight": false
+    },
+    {
+     "id": "i054",
+     "slug": "butter-naan",
+     "name": "Butter Naan",
+     "price": 3,
+     "description": "",
+     "image": "/assets/site/dish-naan-breads.webp",
+     "available": true,
+     "highlight": false
+    },
+    {
+     "id": "i055",
+     "slug": "garlic-naan",
+     "name": "Garlic Naan",
+     "price": 3.5,
+     "description": "",
+     "image": "/assets/dishes/garlic-naan--ig-DNdW30UMMhN.webp",
+     "available": true,
+     "highlight": false
+    },
+    {
+     "id": "i056",
+     "slug": "chilli-naan",
+     "name": "Chilli Naan",
+     "price": 3.5,
+     "description": "",
+     "image": "/assets/dishes/chilli-paneer--ig-DW4ZpyhD8Y-.webp",
+     "available": true,
+     "highlight": false
+    },
+    {
+     "id": "i057",
+     "slug": "paneer-naan",
+     "name": "Paneer Naan",
+     "price": 5,
+     "description": "",
+     "image": "/assets/stock/paneer-naan.webp",
+     "available": true,
+     "highlight": false
+    },
+    {
+     "id": "i058",
+     "slug": "tandoori-roti",
+     "name": "Tandoori Roti",
+     "price": 2,
+     "description": "",
+     "image": "/assets/dishes/tandoori-chicken--ig-DZTSI3QD03L.webp",
+     "available": true,
+     "highlight": false
+    },
+    {
+     "id": "i059",
+     "slug": "peshawari-naan",
+     "name": "Peshawari Naan",
+     "price": 6,
+     "description": "",
+     "image": "/assets/site/dish-naan-breads.webp",
+     "available": true,
+     "highlight": false
+    }
+   ]
+  },
+  {
+   "name": "Mandis",
+   "note": null,
+   "items": [
+    {
+     "id": "i060",
+     "slug": "chicken-mandi-serves-1",
+     "name": "Chicken Mandi (Serves 1)",
+     "price": 10,
+     "description": "",
+     "image": "/assets/dishes/chicken-mandi--ig-DX2mJz0jZwG.webp",
+     "available": true,
+     "highlight": false
+    },
+    {
+     "id": "i061",
+     "slug": "chicken-mandi-serves-2",
+     "name": "Chicken Mandi (Serves 2)",
+     "price": 19,
+     "description": "",
+     "image": "/assets/dishes/chicken-mandi--ig-DX2mJz0jZwG.webp",
+     "available": true,
+     "highlight": false
+    },
+    {
+     "id": "i062",
+     "slug": "chicken-mandi-serves-4",
+     "name": "Chicken Mandi (Serves 4)",
+     "price": 40,
+     "description": "Includes 1 chicken appetizer",
+     "image": "/assets/dishes/chicken-mandi--ig-DX2mJz0jZwG.webp",
+     "available": true,
+     "highlight": false
+    },
+    {
+     "id": "i063",
+     "slug": "mutton-mandi-serves-1",
+     "name": "Mutton Mandi (Serves 1)",
+     "price": 19,
+     "description": "",
+     "image": "/assets/site/dish-mutton-mandi.webp",
+     "available": true,
+     "highlight": false
+    },
+    {
+     "id": "i064",
+     "slug": "mutton-mandi-serves-2",
+     "name": "Mutton Mandi (Serves 2)",
+     "price": 36,
+     "description": "",
+     "image": "/assets/site/dish-mutton-mandi.webp",
+     "available": true,
+     "highlight": false
+    },
+    {
+     "id": "i065",
+     "slug": "mutton-mandi-serves-4",
+     "name": "Mutton Mandi (Serves 4)",
+     "price": 76,
+     "description": "Includes 1 chicken appetizer",
+     "image": "/assets/site/dish-mutton-mandi.webp",
+     "available": true,
+     "highlight": false
+    }
+   ]
+  },
+  {
+   "name": "Extras",
+   "note": null,
+   "items": [
+    {
+     "id": "i066",
+     "slug": "extra-chicken-piece",
+     "name": "Extra Chicken Piece",
+     "price": 7,
+     "description": "",
+     "image": "/assets/dishes/chicken-65--ig-DPOp4dWjSsb.webp",
+     "available": true,
+     "highlight": false
+    },
+    {
+     "id": "i067",
+     "slug": "extra-mutton-piece",
+     "name": "Extra Mutton Piece",
+     "price": 15,
+     "description": "",
+     "image": "/assets/dishes/mutton-mandi--ig-DMVQoSBqjdM.webp",
+     "available": true,
+     "highlight": false
+    },
+    {
+     "id": "i068",
+     "slug": "chicken-mandi-rice",
+     "name": "Chicken Mandi Rice",
+     "price": 7,
+     "description": "",
+     "image": "/assets/dishes/chicken-mandi--ig-DX2mJz0jZwG.webp",
+     "available": true,
+     "highlight": false
+    },
+    {
+     "id": "i069",
+     "slug": "mutton-mandi-rice",
+     "name": "Mutton Mandi Rice",
+     "price": 7,
+     "description": "",
+     "image": "/assets/site/dish-mutton-mandi.webp",
+     "available": true,
+     "highlight": false
+    },
+    {
+     "id": "i070",
+     "slug": "plain-yogurt",
+     "name": "Plain Yogurt",
+     "price": 6,
+     "description": "",
+     "image": "/assets/dishes/mutton-mandi--ig-DMVQoSBqjdM.webp",
+     "available": true,
+     "highlight": false
+    },
+    {
+     "id": "i071",
+     "slug": "white-rice",
+     "name": "White Rice",
+     "price": 5,
+     "description": "",
+     "image": "/assets/dishes/mutton-mandi--ig-DMVQoSBqjdM.webp",
+     "available": true,
+     "highlight": false
+    },
+    {
+     "id": "i072",
+     "slug": "biryani-rice",
+     "name": "Biryani Rice",
+     "price": 7,
+     "description": "",
+     "image": "/assets/dishes/mutton-mandi--ig-DMVQoSBqjdM.webp",
+     "available": true,
+     "highlight": false
+    },
+    {
+     "id": "i073",
+     "slug": "biryani-chicken-piece",
+     "name": "Biryani Chicken Piece",
+     "price": 8,
+     "description": "",
+     "image": "/assets/dishes/chicken-65--ig-DPOp4dWjSsb.webp",
+     "available": true,
+     "highlight": false
+    },
+    {
+     "id": "i074",
+     "slug": "extra-raita-gravy",
+     "name": "Extra Raita/Gravy",
+     "price": 1,
+     "description": "",
+     "image": "/assets/dishes/mutton-mandi--ig-DMVQoSBqjdM.webp",
+     "available": true,
+     "highlight": false
+    }
+   ]
+  },
+  {
+   "name": "Ready To Go (Rolls)",
+   "note": null,
+   "items": [
+    {
+     "id": "i075",
+     "slug": "butter-chicken-roll",
+     "name": "Butter Chicken Roll",
+     "price": 12,
+     "description": "",
+     "image": "/assets/dishes/chicken-65--ig-DPOp4dWjSsb.webp",
+     "available": true,
+     "highlight": false
+    },
+    {
+     "id": "i076",
+     "slug": "paneer-tikka-masala-roll",
+     "name": "Paneer Tikka Masala Roll",
+     "price": 12,
+     "description": "",
+     "image": "/assets/dishes/paneer-tikka-masala--ig-DMktbHWxDT7.webp",
+     "available": true,
+     "highlight": false
+    },
+    {
+     "id": "i077",
+     "slug": "chicken-tikka-masala-roll",
+     "name": "Chicken Tikka Masala Roll",
+     "price": 12,
+     "description": "",
+     "image": "/assets/dishes/chicken-tikka-masala--ig-DZtEgWtEQGD.webp",
+     "available": true,
+     "highlight": false
+    },
+    {
+     "id": "i078",
+     "slug": "chicken-shawarma-roll",
+     "name": "Chicken Shawarma Roll",
+     "price": 12,
+     "description": "",
+     "image": "/assets/dishes/chicken-65--ig-DPOp4dWjSsb.webp",
+     "available": true,
+     "highlight": false
+    }
+   ]
+  },
+  {
+   "name": "Desserts",
+   "note": null,
+   "items": [
+    {
+     "id": "i079",
+     "slug": "kaddu-ki-kheer",
+     "name": "Kaddu Ki Kheer",
+     "price": 7,
+     "description": "",
+     "image": "/assets/dishes/kaddu-ki-kheer--ig-DQHTXXeEr76.webp",
+     "available": true,
+     "highlight": false
+    },
+    {
+     "id": "i080",
+     "slug": "double-ka-meetha",
+     "name": "Double Ka Meetha",
+     "price": 6,
+     "description": "",
+     "image": "/assets/dishes/double-ka-meetha--ig-DP6bdIzDd0m.webp",
+     "available": true,
+     "highlight": false
+    },
+    {
+     "id": "i081",
+     "slug": "khubani-ka-meetha",
+     "name": "Khubani Ka Meetha",
+     "price": 7,
+     "description": "",
+     "image": "/assets/dishes/khubani-ka-meetha--ig-DNTDy1rupl-.webp",
+     "available": true,
+     "highlight": false
+    },
+    {
+     "id": "i082",
+     "slug": "gulab-jamun",
+     "name": "Gulab Jamun",
+     "price": 6,
+     "description": "",
+     "image": "/assets/dishes/gulab-jamun--ig-DMnSKoRBhu8.webp",
+     "available": true,
+     "highlight": false
+    },
+    {
+     "id": "i083",
+     "slug": "rasmalai",
+     "name": "Rasmalai",
+     "price": 6,
+     "description": "",
+     "image": "/assets/stock/rasmalai.webp",
+     "available": true,
+     "highlight": false
+    },
+    {
+     "id": "i084",
+     "slug": "sweet-pan",
+     "name": "Sweet Pan",
+     "price": 3.99,
+     "description": "",
+     "image": "/assets/stock/sweet-pan.webp",
+     "available": true,
+     "highlight": false
+    }
+   ]
+  },
+  {
+   "name": "Beverages",
+   "note": null,
+   "items": [
+    {
+     "id": "i085",
+     "slug": "lemon-tea",
+     "name": "Lemon Tea",
+     "price": 2.5,
+     "description": "",
+     "image": "/assets/stock/lemon-tea.webp",
+     "available": true,
+     "highlight": false
+    },
+    {
+     "id": "i086",
+     "slug": "hbh-special-indian-tea",
+     "name": "HBH Special Indian Tea",
+     "price": 3,
+     "description": "",
+     "image": "/assets/stock/hbh-special-indian-tea.webp",
+     "available": true,
+     "highlight": false
+    },
+    {
+     "id": "i087",
+     "slug": "indian-coffee",
+     "name": "Indian Coffee",
+     "price": 4,
+     "description": "",
+     "image": "/assets/stock/indian-coffee.webp",
+     "available": true,
+     "highlight": false
+    },
+    {
+     "id": "i088",
+     "slug": "mango-lassi",
+     "name": "Mango Lassi",
+     "price": 6,
+     "description": "",
+     "image": "/assets/stock/mango-lassi.webp",
+     "available": true,
+     "highlight": false
+    },
+    {
+     "id": "i089",
+     "slug": "buttermilk",
+     "name": "Buttermilk",
+     "price": 5,
+     "description": "",
+     "image": "/assets/stock/buttermilk.webp",
+     "available": true,
+     "highlight": false
+    },
+    {
+     "id": "i090",
+     "slug": "canned-soda",
+     "name": "Canned Soda",
+     "price": 2.5,
+     "description": "",
+     "image": "/assets/stock/canned-soda.webp",
+     "available": true,
+     "highlight": false
+    },
+    {
+     "id": "i091",
+     "slug": "bottled-water",
+     "name": "Bottled Water",
+     "price": 1.5,
+     "description": "",
+     "image": "/assets/stock/bottled-water.webp",
+     "available": true,
+     "highlight": false
+    }
+   ]
+  }
+ ]
+}
