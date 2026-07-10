@@ -6,6 +6,12 @@
   const money = (n) => "$" + (+n).toFixed(2);
   const esc = (s) =>
     String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  const isDineIn = (o) => o.orderType === "dine-in";
+  const payLabel = (o) =>
+    o.payment === "online" ? (o.paid ? "Paid online ✓" : "Online (unpaid)")
+    : o.payment === "card" ? "Card at pickup"
+    : o.payment === "counter" ? "Pay at table"
+    : "Cash";
 
   let token = sessionStorage.getItem("hbh-admin-token") || null;
   let role = sessionStorage.getItem("hbh-admin-role") || null;
@@ -30,13 +36,22 @@
   /* ── gate ── */
   $("#gate-form").addEventListener("submit", async (e) => {
     e.preventDefault();
+    const submitBtn = $("#gate-form button[type=submit]");
+    const label = submitBtn.textContent;
+    $("#gate-err").textContent = "";
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Signing in…"; // feedback: a cold serverless start can take a few seconds
+    /* don't let a hung request spin forever */
+    const ctrl = new AbortController();
+    const timer = setTimeout(() => ctrl.abort(), 20000);
     try {
       const res = await fetch("/api/admin/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ pin: $("#pin").value }),
+        signal: ctrl.signal,
       });
-      const data = await res.json();
+      const data = await res.json().catch(() => ({}));
       if (!res.ok) throw new Error(data.error || "Wrong PIN");
       token = data.token;
       role = data.role;
@@ -44,9 +59,15 @@
       sessionStorage.setItem("hbh-admin-role", role);
       enter();
     } catch (err) {
-      $("#gate-err").textContent = err.message;
+      $("#gate-err").textContent = err.name === "AbortError"
+        ? "That took too long — check your connection and try again."
+        : err.message;
       $("#pin").value = "";
       $("#pin").focus();
+    } finally {
+      clearTimeout(timer);
+      submitBtn.disabled = false;
+      submitBtn.textContent = label;
     }
   });
 
@@ -212,16 +233,18 @@
       .q{width:34px} .r{text-align:right;white-space:nowrap}
       .tot td{border-top:1px dashed #000;padding-top:6px}
       .meta{margin:10px 0;border-top:1px dashed #000;padding-top:8px}
+      .big{font-weight:bold;font-size:15px;text-align:center;border:1.5px solid #000;padding:5px;margin:0 0 8px}
       .notes{border:1px solid #000;padding:6px;margin-top:8px}
     </style></head><body>
       <h1>HYDERABAD BIRYANI HOUSE</h1>
       <p class="c">6810 E Fowler Ave · (813) 988-2220</p>
       <div class="meta">
+        <div class="big">${o.orderType === "dine-in" ? "DINE-IN — TABLE " + esc(o.table) : "PICKUP"}</div>
         <div><b>${esc(o.id)}</b> — ${esc(o.status).toUpperCase()}</div>
         <div>Placed: ${new Date(o.placedAt).toLocaleString()}</div>
-        <div>Pickup: ${esc(o.pickupTime)}</div>
-        <div>Customer: ${esc(o.name)} · ${esc(o.phone)}</div>
-        <div>Payment: ${o.payment === "online" ? (o.paid ? "PAID ONLINE" : "online (unpaid)") : esc(o.payment)}</div>
+        ${o.orderType === "dine-in" ? "" : `<div>Pickup: ${esc(o.pickupTime)}</div>`}
+        <div>Customer: ${esc(o.name)}${o.phone ? " · " + esc(o.phone) : ""}</div>
+        <div>Payment: ${o.payment === "counter" ? "PAY AT TABLE" : o.payment === "online" ? (o.paid ? "PAID ONLINE" : "online (unpaid)") : esc(o.payment)}</div>
       </div>
       <table>${rows}
         <tr class="tot"><td></td><td>Subtotal</td><td class="r">${money(o.subtotal)}</td></tr>
@@ -238,21 +261,25 @@
   }
 
   function orderCard(o) {
+    const dineIn = isDineIn(o);
     const el = document.createElement("article");
-    el.className = "order" + (o.status === "new" ? " is-new" : "");
+    el.className = "order" + (o.status === "new" ? " is-new" : "") + (dineIn ? " is-dinein" : "");
     const t = new Date(o.placedAt).toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
     el.innerHTML = `
       <div class="order-top">
         <span class="order-id">${esc(o.id)}</span>
-        <span class="order-time">${t} · pickup ${esc(o.pickupTime)}</span>
+        ${dineIn
+          ? `<span class="type-badge is-table">🍽 Table ${esc(o.table)}</span>`
+          : `<span class="type-badge is-pickup">🥡 Pickup</span>`}
       </div>
-      <div class="order-who">${esc(o.name)}<a href="tel:${esc(o.phone)}">${esc(o.phone)}</a></div>
+      <div class="order-time">${t}${dineIn ? " · dine-in" : " · pickup " + esc(o.pickupTime)}</div>
+      <div class="order-who">${esc(o.name)}${o.phone ? `<a href="tel:${esc(o.phone)}">${esc(o.phone)}</a>` : ""}</div>
       <ul class="order-lines">
         ${o.lines.map((l) => `<li><span class="q">${l.qty}×</span><span style="flex:1">${esc(l.name)}</span><span>${money(l.price * l.qty)}</span></li>`).join("")}
       </ul>
       ${o.notes ? `<div class="order-notes">${esc(o.notes)}</div>` : ""}
       <div class="order-meta">
-        <span>${o.payment === "online" ? (o.paid ? "Paid online ✓" : "Online (unpaid)") : o.payment === "card" ? "Card at pickup" : "Cash"}</span>
+        <span>${payLabel(o)}</span>
         <b>${money(o.total)}</b>
       </div>
     `;
@@ -338,9 +365,10 @@
           <b>${money(o.total)}</b>
         </summary>
         <div class="receipt-body">
-          <p class="receipt-line"><span>Phone</span><a href="tel:${esc(o.phone)}">${esc(o.phone)}</a></p>
-          <p class="receipt-line"><span>Pickup</span><span>${esc(o.pickupTime)}</span></p>
-          <p class="receipt-line"><span>Payment</span><span>${o.payment === "online" ? (o.paid ? "Paid online" : "Online, unpaid") : esc(o.payment)}</span></p>
+          <p class="receipt-line"><span>Type</span><span>${isDineIn(o) ? "Dine-in · Table " + esc(o.table) : "Pickup"}</span></p>
+          ${o.phone ? `<p class="receipt-line"><span>Phone</span><a href="tel:${esc(o.phone)}">${esc(o.phone)}</a></p>` : ""}
+          ${isDineIn(o) ? "" : `<p class="receipt-line"><span>Pickup</span><span>${esc(o.pickupTime)}</span></p>`}
+          <p class="receipt-line"><span>Payment</span><span>${payLabel(o)}</span></p>
           ${o.notes ? `<p class="receipt-line"><span>Notes</span><span>${esc(o.notes)}</span></p>` : ""}
           ${o.rejectReason ? `<p class="receipt-line"><span>Reject reason</span><span>${esc(o.rejectReason)}</span></p>` : ""}
           <ul class="order-lines">
@@ -587,12 +615,15 @@
         <span class="hbar-val">${i.qty} · ${money(i.revenue)}</span>
       </div>`).join("") || '<p class="panel-hint">No sales yet.</p>';
 
-    const totalPay = Math.max(1, s.paySplit.cash + s.paySplit.card + s.paySplit.online);
-    $("#pay-split").innerHTML = ["cash", "card", "online"].map((k) => `
+    const ps = s.paySplit;
+    const payKeys = ["cash", "card", "online", "counter"];
+    const payLabels = { cash: "Cash", card: "Card at pickup", online: "Online", counter: "At table (dine-in)" };
+    const totalPay = Math.max(1, payKeys.reduce((sum, k) => sum + (ps[k] || 0), 0));
+    $("#pay-split").innerHTML = payKeys.map((k) => `
       <div class="hbar">
-        <span class="hbar-name">${k}</span>
-        <span class="hbar-track"><i style="width:${(s.paySplit[k] / totalPay) * 100}%"></i></span>
-        <span class="hbar-val">${s.paySplit[k]}</span>
+        <span class="hbar-name">${payLabels[k]}</span>
+        <span class="hbar-track"><i style="width:${((ps[k] || 0) / totalPay) * 100}%"></i></span>
+        <span class="hbar-val">${ps[k] || 0}</span>
       </div>`).join("");
   }
 

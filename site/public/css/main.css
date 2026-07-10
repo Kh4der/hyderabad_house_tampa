@@ -617,3 +617,54 @@ address { font-style: normal; color: var(--muted); margin-bottom: 22px; font-siz
 .toast.is-show { opacity: 1; transform: translate(-50%, 0); }
 /* with the cart drawer open, sit above its Checkout button */
 body.drawer-open .toast { bottom: 130px; z-index: 160; }
+/* toast can carry a short multi-line list (copied delivery items) */
+.toast { white-space: pre-line; max-width: min(88vw, 420px); text-align: center; }
+
+/* ── dine-in table flag (nav) ── */
+.table-flag {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-family: var(--font-mono); font-size: 0.78rem; color: #241B04;
+  background: var(--saffron); padding: 6px 11px; border-radius: 999px; font-weight: 600;
+}
+.table-flag b { font-weight: 700; }
+@media (max-width: 640px) { .table-flag { display: none; } } /* room is tight on phones; drawer still shows it */
+
+/* ── order mode block (cart view): dine-in note or delivery hand-off ── */
+.order-mode { margin-bottom: 18px; }
+.mode-dinein, .mode-deliver {
+  background: var(--char); border: 1px solid var(--line);
+  border-radius: var(--r-card); padding: 14px 16px;
+}
+.mode-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--saffron); color: #241B04; font-weight: 700;
+  font-size: 0.86rem; padding: 5px 12px; border-radius: 999px;
+}
+.mode-dinein p { color: var(--muted); font-size: 0.9rem; margin: 10px 0 0; line-height: 1.45; }
+.mode-leave {
+  margin-top: 12px; background: none; border: 0; padding: 0; cursor: pointer;
+  color: var(--saffron); font-size: 0.84rem; text-decoration: underline; font-family: var(--font-body);
+}
+.mode-h { font-weight: 700; font-size: 0.95rem; }
+.deliver-row { display: flex; gap: 10px; margin: 12px 0 10px; }
+.deliver-btn {
+  flex: 1; text-align: center; text-decoration: none; color: #fff;
+  font-weight: 700; font-size: 0.92rem; padding: 12px 10px; border-radius: var(--r-input);
+}
+.deliver-btn.is-uber { background: #06C167; }   /* Uber Eats green */
+.deliver-btn.is-dd { background: #FF3008; }      /* DoorDash red */
+.deliver-btn:hover { filter: brightness(1.06); }
+.mode-copy {
+  background: transparent; color: var(--cream); box-shadow: inset 0 0 0 1.5px var(--line);
+  border: 0; border-radius: var(--r-input); padding: 9px 14px; cursor: pointer;
+  font-family: var(--font-body); font-size: 0.86rem; font-weight: 600;
+}
+.mode-copy:hover { box-shadow: inset 0 0 0 1.5px var(--saffron); }
+.mode-note { color: var(--muted); font-size: 0.78rem; line-height: 1.4; margin: 10px 0 0; }
+
+/* dine-in note in the checkout view */
+.dinein-note {
+  background: var(--char); border: 1px solid var(--line); border-left: 3px solid var(--saffron);
+  border-radius: var(--r-input); padding: 11px 13px; color: var(--muted);
+  font-size: 0.86rem; line-height: 1.45; margin-bottom: 16px;
+}

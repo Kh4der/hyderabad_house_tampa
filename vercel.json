@@ -9,6 +9,8 @@
     { "src": "/assets/uploads/(.*)", "dest": "site/server.js" },
     { "src": "/admin", "dest": "site/public/admin.html" },
     { "src": "/", "dest": "site/public/index.html" },
-    { "src": "/(.*)", "dest": "site/public/$1" }
+    { "src": "/(.+)", "dest": "site/public/$1", "continue": true },
+    { "handle": "filesystem" },
+    { "src": "/(.*)", "status": 404, "dest": "site/public/404.html" }
   ]
 }

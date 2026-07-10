@@ -5,10 +5,14 @@
   "description": "Hyderabad Biryani House — immersive site with ordering + admin",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "qr": "node scripts/make-table-qr.js"
   },
   "dependencies": {
     "express": "^4.19.0",
     "stripe": "^22.3.0"
+  },
+  "devDependencies": {
+    "qrcode": "^1.5.4"
   }
 }

@@ -12,3 +12,5 @@ crawl/
 
 # local tooling
 .claude/
+
+.vercel

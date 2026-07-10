@@ -5,6 +5,7 @@ const path = require("path");
 const crypto = require("crypto");
 
 const app = express();
+app.set("trust proxy", true); // on Vercel the real client IP is in x-forwarded-for
 const PORT = process.env.PORT || 4000;
 const ADMIN_PIN = process.env.ADMIN_PIN || "2220";
 const EMPLOYEE_PIN = process.env.EMPLOYEE_PIN || "1111";
@@ -22,6 +23,16 @@ if (STRIPE_SECRET_KEY) {
 /* PostHog: analytics switch on when a key is provided */
 const POSTHOG_KEY = process.env.POSTHOG_KEY || "";
 const POSTHOG_HOST = process.env.POSTHOG_HOST || "https://us.i.posthog.com";
+
+/* Dine-in: how many tables have a QR code, and where "get it delivered"
+   sends people. The delivery apps can't accept our cart, so these just
+   open the restaurant's storefront on each app. Override via env if the
+   store URLs ever change. */
+const TABLE_COUNT = parseInt(process.env.TABLE_COUNT, 10) || 25;
+const UBER_EATS_URL = process.env.UBER_EATS_URL ||
+  "https://www.ubereats.com/store/hyderabad-biryani-house-indian-cuisine-usf/KwUx7-JFRAKZBJg5cmTCIA";
+const DOORDASH_URL = process.env.DOORDASH_URL ||
+  "https://www.doordash.com/en/store/hyderabad-biryani-house-tampa-259446/";
 
 /* On Vercel the filesystem is read-only except /tmp, and /tmp resets on
    cold starts. Seed /tmp from the bundled data so everything works; for
@@ -52,20 +63,39 @@ if (!fs.existsSync(SETTINGS_FILE)) {
   writeJSON(SETTINGS_FILE, { orderingOpen: true, pauseMessage: "" });
 }
 
-/* ---- sessions: token -> { role, at } ---- */
+/* ---- sessions: stateless signed tokens. An in-memory Map does NOT work on
+   Vercel — each serverless instance has its own, so you'd sign in on one and
+   get bounced (401) on the next request routed elsewhere. A signed token
+   "role.exp.hmac" verifies on any instance. Set AUTH_SECRET in the env for a
+   fixed secret; otherwise it's derived from the PINs (stable across instances). ---- */
 const SESSION_TTL = 12 * 60 * 60 * 1000; // 12h
-const sessions = new Map();
+const AUTH_SECRET = process.env.AUTH_SECRET ||
+  crypto.createHash("sha256").update(`${ADMIN_PIN}|${EMPLOYEE_PIN}|hbh-session-v1`).digest("hex");
+function signSession(role) {
+  const body = `${role}.${Date.now() + SESSION_TTL}`;
+  const sig = crypto.createHmac("sha256", AUTH_SECRET).update(body).digest("base64url");
+  return `${body}.${sig}`;
+}
+function verifySession(token) {
+  if (!token) return null;
+  const cut = token.lastIndexOf(".");
+  if (cut < 0) return null;
+  const body = token.slice(0, cut);
+  const sig = Buffer.from(token.slice(cut + 1));
+  const expect = Buffer.from(crypto.createHmac("sha256", AUTH_SECRET).update(body).digest("base64url"));
+  if (sig.length !== expect.length || !crypto.timingSafeEqual(sig, expect)) return null;
+  const [role, exp] = body.split(".");
+  if (!["admin", "employee"].includes(role) || Date.now() > Number(exp)) return null;
+  return role;
+}
 const auth = (...roles) => (req, res, next) => {
   const t = (req.headers.authorization || "").replace("Bearer ", "");
-  const s = sessions.get(t);
-  if (!s || Date.now() - s.at > SESSION_TTL) {
-    sessions.delete(t);
-    return res.status(401).json({ error: "Not signed in" });
-  }
-  if (roles.length && !roles.includes(s.role)) {
+  const role = verifySession(t);
+  if (!role) return res.status(401).json({ error: "Not signed in" });
+  if (roles.length && !roles.includes(role)) {
     return res.status(403).json({ error: "Not allowed for your role" });
   }
-  req.role = s.role;
+  req.role = role;
   next();
 };
 
@@ -134,6 +164,9 @@ app.get("/api/config", (req, res) => {
     posthogHost: POSTHOG_KEY ? POSTHOG_HOST : null,
     orderingOpen: settings.orderingOpen !== false,
     pauseMessage: settings.pauseMessage || "",
+    tableCount: TABLE_COUNT,
+    uberEatsUrl: UBER_EATS_URL || null,
+    doorDashUrl: DOORDASH_URL || null,
   });
 });
 
@@ -166,17 +199,44 @@ app.post("/api/orders", async (req, res) => {
       error: settings.pauseMessage || "Online ordering is paused right now. Call (813) 988-2220 to order.",
     });
   }
-  const { name, phone, pickupTime, payment, notes, items } = req.body || {};
-  if (!name || !phone || !Array.isArray(items) || items.length === 0) {
-    return res.status(400).json({ error: "Name, phone, and at least one item are required." });
+  const { name, phone, pickupTime, payment, notes, items, orderType, table } = req.body || {};
+
+  /* dine-in (scanned a table QR) vs pickup (ordered from anywhere) */
+  const type = orderType === "dine-in" ? "dine-in" : "pickup";
+  let tableNo = null;
+  if (type === "dine-in") {
+    tableNo = parseInt(table, 10);
+    if (!(tableNo >= 1 && tableNo <= TABLE_COUNT)) {
+      return res.status(400).json({ error: "That table number isn't valid — please rescan the QR code on your table." });
+    }
   }
-  if (!/^[\d\s()+.-]{7,}$/.test(String(phone))) {
-    return res.status(400).json({ error: "Enter a valid phone number." });
+
+  if (!Array.isArray(items) || items.length === 0) {
+    return res.status(400).json({ error: "Add at least one item to your order." });
   }
-  const pay = ["card", "online"].includes(payment) ? payment : "cash";
-  if (pay === "online" && !stripe) {
-    return res.status(400).json({ error: "Online payment is not available right now. Choose cash or card at pickup." });
+
+  const cleanName = String(name || "").trim().slice(0, 80);
+  const cleanPhone = String(phone || "").trim().slice(0, 25);
+  if (type === "pickup") {
+    /* pickup needs a name + phone so the kitchen can call when it's ready */
+    if (!cleanName) return res.status(400).json({ error: "Name, phone, and at least one item are required." });
+    if (!/^[\d\s()+.-]{7,}$/.test(cleanPhone)) return res.status(400).json({ error: "Enter a valid phone number." });
+  } else if (cleanPhone && !/^[\d\s()+.-]{7,}$/.test(cleanPhone)) {
+    /* dine-in name + phone are optional, but a bad phone is still rejected */
+    return res.status(400).json({ error: "Enter a valid phone number, or leave it blank." });
   }
+
+  /* pay-now-online is pickup-only; dine-in always settles at the table/counter */
+  let pay;
+  if (type === "dine-in") {
+    pay = "counter";
+  } else {
+    pay = ["card", "online"].includes(payment) ? payment : "cash";
+    if (pay === "online" && !stripe) {
+      return res.status(400).json({ error: "Online payment is not available right now. Choose cash or card at pickup." });
+    }
+  }
+
   const priced = priceOrder(items, pay);
   if (priced.error) return res.status(priced.code).json({ error: priced.error });
 
@@ -186,9 +246,11 @@ app.post("/api/orders", async (req, res) => {
     placedAt: new Date().toISOString(),
     status: pay === "online" ? "awaiting-payment" : "new",
     paid: false,
-    name: String(name).slice(0, 80),
-    phone: String(phone).slice(0, 25),
-    pickupTime: String(pickupTime || "ASAP").slice(0, 40),
+    orderType: type,
+    table: tableNo,
+    name: cleanName || (type === "dine-in" ? "Table " + tableNo : ""),
+    phone: cleanPhone,
+    pickupTime: type === "dine-in" ? "Dine-in" : String(pickupTime || "ASAP").slice(0, 40),
     payment: pay,
     notes: String(notes || "").slice(0, 500),
     lines: priced.lines,
@@ -229,7 +291,10 @@ app.post("/api/orders", async (req, res) => {
 
   orders.push(order);
   writeJSON(ORDERS_FILE, orders);
-  res.status(201).json({ id: order.id, total: order.total, pickupTime: order.pickupTime });
+  res.status(201).json({
+    id: order.id, total: order.total, pickupTime: order.pickupTime,
+    orderType: order.orderType, table: order.table,
+  });
 });
 
 /* success-page fallback when no webhook is configured (e.g. local dev):
@@ -261,9 +326,7 @@ app.post("/api/admin/login", (req, res) => {
   const role = pin === ADMIN_PIN ? "admin" : pin === EMPLOYEE_PIN ? "employee" : null;
   if (!role) { loginFailed(ip); return res.status(401).json({ error: "Wrong PIN" }); }
   loginAttempts.delete(ip);
-  const token = crypto.randomBytes(24).toString("hex");
-  sessions.set(token, { role, at: Date.now() });
-  res.json({ token, role });
+  res.json({ token: signSession(role), role });
 });
 
 /* ---- shared: orders board + receipts (admin + employee) ---- */
@@ -402,10 +465,11 @@ app.get("/api/admin/export.csv", auth("admin"), (req, res) => {
     const s = String(v ?? "");
     return /[",\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s;
   };
-  const head = "id,placedAt,status,name,phone,pickupTime,payment,paid,items,subtotal,cardFee,tax,total,notes";
+  const head = "id,placedAt,status,type,table,name,phone,pickupTime,payment,paid,items,subtotal,cardFee,tax,total,notes";
   const rows = orders.map((o) =>
     [
-      o.id, o.placedAt, o.status, o.name, o.phone, o.pickupTime, o.payment, o.paid ? "yes" : "no",
+      o.id, o.placedAt, o.status, o.orderType || "pickup", o.table || "",
+      o.name, o.phone, o.pickupTime, o.payment, o.paid ? "yes" : "no",
       o.lines.map((l) => `${l.qty}x ${l.name}`).join("; "),
       o.subtotal.toFixed(2), (o.cardFee || 0).toFixed(2), o.tax.toFixed(2), o.total.toFixed(2),
       o.notes || "",
@@ -482,12 +546,14 @@ app.get("/api/admin/stats", auth("admin"), (req, res) => {
     .slice(0, 10);
 
   /* payment + hour-of-day split */
-  const paySplit = { cash: 0, card: 0, online: 0 };
+  const paySplit = { cash: 0, card: 0, online: 0, counter: 0 };
   const byHour = Array(24).fill(0);
   for (const o of sold) {
     paySplit[o.payment] = (paySplit[o.payment] || 0) + 1;
     byHour[new Date(o.placedAt).getHours()]++;
   }
+  const typeSplit = { pickup: 0, "dine-in": 0 };
+  for (const o of sold) typeSplit[o.orderType === "dine-in" ? "dine-in" : "pickup"]++;
 
   const todays = sold.filter((o) => dayKey(o.placedAt) === today);
   res.json({
@@ -504,8 +570,18 @@ app.get("/api/admin/stats", auth("admin"), (req, res) => {
     days: days.map((d) => ({ day: d, revenue: +byDay[d].revenue.toFixed(2), orders: byDay[d].orders })),
     topItems,
     paySplit,
+    typeSplit,
     byHour,
   });
+});
+
+/* ---- 404: branded page for pages, JSON for the API. Also the fallback
+   that Vercel routes unmatched paths to (see vercel.json). ---- */
+app.use((req, res) => {
+  if (req.path.startsWith("/api/")) return res.status(404).json({ error: "Not found" });
+  res.status(404);
+  const p = path.join(__dirname, "public", "404.html");
+  return fs.existsSync(p) ? res.sendFile(p) : res.type("txt").send("Not found");
 });
 
 if (require.main === module) {

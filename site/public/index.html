@@ -40,6 +40,7 @@
     <a href="#visit">Visit</a>
   </nav>
   <div class="nav-actions">
+    <span class="table-flag" id="table-flag" hidden>🍽 Table <b id="table-flag-n"></b></span>
     <a class="nav-phone" href="tel:+18139882220">(813) 988-2220</a>
     <a class="nav-call" href="tel:+18139882220" aria-label="Call to order: (813) 988-2220">📞</a>
     <button class="btn btn-cart" id="cart-open" aria-haspopup="dialog">
@@ -284,6 +285,8 @@
   </div>
 
   <div class="drawer-body" id="drawer-view-cart">
+    <!-- order-mode: dine-in note (from a table QR) or delivery-app hand-off; filled by main.js -->
+    <div class="order-mode" id="order-mode" hidden></div>
     <ul class="cart-lines" id="cart-lines"></ul>
     <div class="cart-empty" id="cart-empty">
       <p>Nothing here yet.</p>
@@ -292,22 +295,23 @@
   </div>
 
   <form class="drawer-body" id="drawer-view-checkout" hidden novalidate>
-    <h3>Pickup details</h3>
+    <h3 id="checkout-heading">Pickup details</h3>
+    <p class="dinein-note" id="dinein-note" hidden></p>
     <div class="field">
-      <label for="f-name">Your name</label>
+      <label for="f-name" id="f-name-label">Your name</label>
       <input id="f-name" name="name" type="text" autocomplete="name" required maxlength="80" />
       <span class="field-err" id="err-name"></span>
     </div>
     <div class="field">
-      <label for="f-phone">Phone</label>
+      <label for="f-phone" id="f-phone-label">Phone</label>
       <input id="f-phone" name="phone" type="tel" autocomplete="tel" required maxlength="25" />
       <span class="field-err" id="err-phone"></span>
     </div>
-    <div class="field">
+    <div class="field" id="field-time">
       <label for="f-time">Pickup time</label>
       <select id="f-time" name="pickupTime"></select>
     </div>
-    <fieldset class="field field-pay">
+    <fieldset class="field field-pay" id="field-pay">
       <legend>Payment</legend>
       <label class="pay-opt"><input type="radio" name="payment" value="cash" checked /> Cash at pickup</label>
       <label class="pay-opt"><input type="radio" name="payment" value="card" /> Card at pickup <small>(adds 4% fee)</small></label>

@@ -20,6 +20,9 @@
     .then((r) => r.json())
     .then((cfg) => {
       if (cfg.stripeEnabled) $("#pay-online").hidden = false;
+      deliveryLinks.uberEats = cfg.uberEatsUrl || null;
+      deliveryLinks.doorDash = cfg.doorDashUrl || null;
+      applyMode();
       if (cfg.orderingOpen === false) {
         orderingPaused = true;
         pauseMessage = cfg.pauseMessage || "Online ordering is paused right now. Call (813) 988-2220 to order.";
@@ -57,6 +60,25 @@
     setTimeout(() => toast("Payment cancelled — your order was not placed."), 400);
     history.replaceState(null, "", location.pathname);
   }
+
+  /* ── dine-in: a table QR opens /?table=N. Remember it for this browser
+     session and tidy it out of the URL so refreshes/shares don't carry it. ── */
+  const deliveryLinks = { uberEats: null, doorDash: null };
+  let tableNo = null;
+  (function detectTable() {
+    const raw = params.get("table");
+    if (raw !== null) {
+      const n = parseInt(raw, 10);
+      if (n >= 1 && n <= 99) { tableNo = n; try { sessionStorage.setItem("hbh-table", String(n)); } catch (e) {} }
+      const clean = new URLSearchParams(location.search);
+      clean.delete("table");
+      const qs = clean.toString();
+      history.replaceState(null, "", location.pathname + (qs ? "?" + qs : "") + location.hash);
+    } else {
+      const saved = parseInt(sessionStorage.getItem("hbh-table"), 10);
+      if (saved >= 1 && saved <= 99) tableNo = saved;
+    }
+  })();
 
   /* ── the doors: sparks trace the emblem, then they open ── */
   const doors = $("#doors");
@@ -393,10 +415,13 @@
     views.checkout.hidden = v !== "checkout";
     views.success.hidden = v !== "success";
     $("#drawer-foot").style.display = v === "success" ? "none" : "";
+    const dineIn = isDineIn();
     $("#drawer-title").textContent =
-      v === "cart" ? "Your order" : v === "checkout" ? "Checkout" : "Order placed";
-    $("#cart-next").textContent = v === "cart" ? "Checkout" : "Place order";
+      v === "cart" ? "Your order" : v === "checkout" ? (dineIn ? "Table " + tableNo : "Checkout") : "Order placed";
+    $("#cart-next").textContent =
+      v === "cart" ? (dineIn ? "Order for table " + tableNo : "Checkout") : (dineIn ? "Send to kitchen" : "Place order");
     $("#cart-back").hidden = v !== "checkout";
+    if (v === "checkout") paintCheckoutMode();
     syncCartUI();
   }
 
@@ -458,9 +483,96 @@
     $("#t-total").textContent = money(sub + fee + tax);
     $("#cart-next").disabled = cart.length === 0;
     $("#cart-next").style.opacity = cart.length ? "" : "0.5";
+
+    renderOrderMode();
   }
 
   $$('input[name="payment"]').forEach((r) => r.addEventListener("change", syncCartUI));
+
+  /* ── order mode: dine-in (from a table QR) vs pickup/delivery ── */
+  const isDineIn = () => tableNo != null;
+
+  function applyMode() {
+    const flag = $("#table-flag");
+    if (flag) {
+      flag.hidden = !isDineIn();
+      if (isDineIn()) $("#table-flag-n").textContent = tableNo;
+    }
+    document.body.classList.toggle("is-dinein", isDineIn());
+    renderOrderMode();
+  }
+
+  function leaveTable() {
+    tableNo = null;
+    try { sessionStorage.removeItem("hbh-table"); } catch (e) {}
+    applyMode();
+    syncCartUI();
+    toast("Switched to pickup / delivery.");
+  }
+
+  function copyItems() {
+    const text = cart.map((l) => { const i = findItem(l.id); return i ? `${l.qty}× ${i.name}` : ""; })
+      .filter(Boolean).join("\n");
+    if (!text) { toast("Your cart is empty."); return; }
+    const done = () => toast("Items copied — paste or search them on the app.");
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done).catch(() => toast(text));
+    } else { toast("Your items:\n" + text); }
+  }
+
+  /* fills #order-mode in the cart view: a dine-in note, or the delivery hand-off */
+  function renderOrderMode() {
+    const box = $("#order-mode");
+    if (!box) return;
+
+    if (isDineIn()) {
+      box.hidden = false;
+      box.innerHTML = `
+        <div class="mode-dinein">
+          <span class="mode-badge">🍽 Dine-in · Table ${tableNo}</span>
+          <p>Your order goes straight to the kitchen. A server brings it to Table ${tableNo} — pay at the table or counter.</p>
+          <button type="button" class="mode-leave" id="mode-leave">Not at table ${tableNo}? Switch to pickup</button>
+        </div>`;
+      const leave = $("#mode-leave");
+      if (leave) leave.addEventListener("click", leaveTable);
+      return;
+    }
+
+    const hasLinks = deliveryLinks.uberEats || deliveryLinks.doorDash;
+    if (!hasLinks || cart.length === 0) { box.hidden = true; box.innerHTML = ""; return; }
+    box.hidden = false;
+    box.innerHTML = `
+      <div class="mode-deliver">
+        <span class="mode-h">Want it delivered?</span>
+        <div class="deliver-row">
+          ${deliveryLinks.uberEats ? `<a class="deliver-btn is-uber" href="${deliveryLinks.uberEats}" target="_blank" rel="noopener noreferrer" data-deliver="ubereats">Uber Eats</a>` : ""}
+          ${deliveryLinks.doorDash ? `<a class="deliver-btn is-dd" href="${deliveryLinks.doorDash}" target="_blank" rel="noopener noreferrer" data-deliver="doordash">DoorDash</a>` : ""}
+        </div>
+        <button type="button" class="mode-copy" id="mode-copy">Copy my items first</button>
+        <p class="mode-note">Delivery apps can't import your cart — tap “Copy my items”, then re-add them on the app. Or check out below to pick up.</p>
+      </div>`;
+    const copy = $("#mode-copy");
+    if (copy) copy.addEventListener("click", copyItems);
+    $$("[data-deliver]", box).forEach((a) =>
+      a.addEventListener("click", () => track("delivery_click", { app: a.dataset.deliver })));
+  }
+
+  /* toggles pickup-only fields off for dine-in */
+  function paintCheckoutMode() {
+    const dineIn = isDineIn();
+    $("#field-time").hidden = dineIn;
+    $("#field-pay").hidden = dineIn;
+    $("#dinein-note").hidden = !dineIn;
+    $("#checkout-heading").textContent = dineIn ? `Table ${tableNo} · your order` : "Pickup details";
+    if (dineIn) {
+      $("#dinein-note").textContent =
+        `Table ${tableNo} — a server will bring it over. Pay at the table or counter. Name and phone are optional.`;
+    }
+    $("#f-name").required = !dineIn;
+    $("#f-phone").required = !dineIn;
+    $("#f-name-label").innerHTML = dineIn ? 'Your name <small>(optional)</small>' : "Your name";
+    $("#f-phone-label").innerHTML = dineIn ? 'Phone <small>(optional)</small>' : "Phone";
+  }
 
   /* ── pickup times: 15-min slots inside opening hours (11 AM – 11 PM) ── */
   function fillPickupTimes() {
@@ -485,7 +597,7 @@
     if (orderingPaused) { toast(pauseMessage); return; }
     if (view === "cart") {
       if (!cart.length) return;
-      fillPickupTimes();
+      if (!isDineIn()) fillPickupTimes();
       showView("checkout");
       $("#f-name").focus();
       track("checkout_started", { items: cartCount(), subtotal: +cartSubtotal().toFixed(2) });
@@ -493,30 +605,40 @@
     }
     const name = $("#f-name").value.trim();
     const phone = $("#f-phone").value.trim();
-    $("#err-name").textContent = name ? "" : "We need a name for the order.";
-    $("#err-phone").textContent = /^[\d\s()+.-]{7,}$/.test(phone) ? "" : "Enter a valid phone number.";
-    if (!name || !/^[\d\s()+.-]{7,}$/.test(phone)) return;
+    const dineIn = isDineIn();
+    /* pickup needs a name + phone; dine-in they're optional (server fills "Table N") */
+    if (!dineIn) {
+      $("#err-name").textContent = name ? "" : "We need a name for the order.";
+      $("#err-phone").textContent = /^[\d\s()+.-]{7,}$/.test(phone) ? "" : "Enter a valid phone number.";
+      if (!name || !/^[\d\s()+.-]{7,}$/.test(phone)) return;
+    } else {
+      $("#err-name").textContent = "";
+      $("#err-phone").textContent = "";
+    }
+    const pay = dineIn ? "counter" : $('input[name="payment"]:checked').value;
 
     const btn = $("#cart-next");
     btn.disabled = true;
-    btn.textContent = "Placing…";
+    btn.textContent = dineIn ? "Sending…" : "Placing…";
     try {
       const res = await fetch("/api/orders", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           name, phone,
-          pickupTime: $("#f-time").value,
-          payment: $('input[name="payment"]:checked').value,
+          pickupTime: dineIn ? "Dine-in" : $("#f-time").value,
+          payment: pay,
           notes: $("#f-notes").value.trim(),
           items: cart,
+          orderType: dineIn ? "dine-in" : "pickup",
+          table: tableNo,
         }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Something went wrong.");
       track("order_placed", {
         order_id: data.id, total: data.total,
-        payment: $('input[name="payment"]:checked').value, items: cartCount(),
+        payment: pay, orderType: dineIn ? "dine-in" : "pickup", table: tableNo, items: cartCount(),
       });
       if (data.checkoutUrl) {
         /* online payment: hand off to Stripe Checkout; cart clears on return */
@@ -525,14 +647,26 @@
       }
       cart = [];
       saveCart();
-      $("#success-detail").textContent =
-        data.id + ", " + money(data.total) + ", pickup " + data.pickupTime;
+      const successH = $("#drawer-view-success h3");
+      const successSub = $("#drawer-view-success .success-sub");
+      if (dineIn) {
+        if (successH) successH.textContent = "Order sent to the kitchen";
+        $("#success-detail").textContent = data.id + " · Table " + tableNo + " · " + money(data.total);
+        if (successSub) successSub.innerHTML = `A server will bring it to Table ${tableNo}. Pay at the table or counter.`;
+      } else {
+        if (successH) successH.textContent = "Order in. The pot is on.";
+        $("#success-detail").textContent = data.id + ", " + money(data.total) + ", pickup " + data.pickupTime;
+        if (successSub) successSub.innerHTML =
+          'Show your name at the counter. Call <a href="tel:+18139882220">(813) 988-2220</a> to change anything.';
+      }
       showView("success");
     } catch (err) {
       toast(err.message);
     } finally {
       btn.disabled = false;
-      btn.textContent = view === "cart" ? "Checkout" : "Place order";
+      btn.textContent = view === "cart"
+        ? (dineIn ? "Order for table " + tableNo : "Checkout")
+        : (dineIn ? "Send to kitchen" : "Place order");
     }
   });
 
@@ -546,5 +680,6 @@
     toastTimer = setTimeout(() => el.classList.remove("is-show"), 2200);
   }
 
+  applyMode();
   syncCartUI();
 })();

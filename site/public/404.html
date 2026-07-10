@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>404 · Hyderabad Biryani House</title>
+<meta name="robots" content="noindex" />
+<meta name="description" content="That page has left the pass — but the biryani is still on. Back to the menu at Hyderabad Biryani House, Temple Terrace." />
+<link rel="icon" href="/assets/logo/logo-square.webp" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300..800&family=Archivo:wght@400;500;600&family=Spline+Sans+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --char: #0A3520; --soot: #10452C; --soot-2: #1A5A3A;
+    --cream: #F1F7EC; --muted: #A3CBB1;
+    --saffron: #D9B23C; --saffron-deep: #B18E22;
+    --line: rgba(233, 247, 236, 0.15);
+    --font-display: "Bricolage Grotesque", sans-serif;
+    --font-body: "Archivo", sans-serif;
+    --font-mono: "Spline Sans Mono", monospace;
+  }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { height: 100%; }
+  body {
+    font-family: var(--font-body); color: var(--cream);
+    background:
+      radial-gradient(1100px 700px at 50% -10%, #14512F 0%, transparent 60%),
+      linear-gradient(180deg, #0A3520 0%, #072417 100%);
+    min-height: 100dvh; overflow: hidden; position: relative;
+  }
+  /* faint dish behind everything */
+  body::before {
+    content: ""; position: fixed; inset: 0; z-index: 0;
+    background: url("/assets/site/dish-chicken-dam-biryani.webp") center/min(60vmin, 520px) no-repeat;
+    opacity: 0.10; filter: blur(2px) saturate(1.1);
+    mask-image: radial-gradient(closest-side, #000 55%, transparent 100%);
+    -webkit-mask-image: radial-gradient(closest-side, #000 55%, transparent 100%);
+  }
+  /* giant 404 watermark */
+  .ghost {
+    position: fixed; inset: 0; z-index: 0; display: grid; place-items: center;
+    font-family: var(--font-display); font-weight: 800; letter-spacing: -0.03em;
+    font-size: clamp(9rem, 34vw, 30rem); line-height: 1; color: transparent;
+    -webkit-text-stroke: 1.5px rgba(233, 247, 236, 0.07);
+    user-select: none; pointer-events: none;
+  }
+
+  /* drifting food stills (always there so the page is rich without a mouse) */
+  .stills { position: fixed; inset: 0; z-index: 1; pointer-events: none; }
+  .still {
+    position: absolute; width: clamp(78px, 12vw, 138px); aspect-ratio: 1;
+    object-fit: cover; border-radius: 16px; opacity: 0.22;
+    box-shadow: 0 18px 50px rgba(0, 0, 0, 0.45); filter: saturate(1.05);
+  }
+  .still.s1 { top: 12%; left: 7%; rotate: -8deg; }
+  .still.s2 { top: 20%; right: 9%; rotate: 9deg; }
+  .still.s3 { bottom: 16%; left: 12%; rotate: 6deg; }
+  .still.s4 { bottom: 12%; right: 8%; rotate: -7deg; }
+  .still.s5 { top: 46%; left: 3%; rotate: 4deg; width: clamp(64px, 9vw, 104px); opacity: 0.16; }
+  @media (prefers-reduced-motion: no-preference) {
+    .still { animation: float 9s ease-in-out infinite; }
+    .still.s2 { animation-delay: -2s; } .still.s3 { animation-delay: -4s; }
+    .still.s4 { animation-delay: -6s; } .still.s5 { animation-delay: -1s; }
+  }
+  @keyframes float { 0%, 100% { translate: 0 0; } 50% { translate: 0 -16px; } }
+
+  /* interactive cursor trail (hover devices) */
+  #trail { position: fixed; inset: 0; z-index: 5; pointer-events: none; overflow: hidden; }
+  .trail-img {
+    position: fixed; width: 122px; height: 122px; object-fit: cover; border-radius: 16px;
+    transform: translate(-50%, -50%) scale(0.4) rotate(var(--r, 0deg)); opacity: 0;
+    box-shadow: 0 16px 46px rgba(0, 0, 0, 0.55); will-change: transform, opacity;
+  }
+  .trail-img.is-live { animation: trail 900ms cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+  @keyframes trail {
+    0%   { opacity: 0; transform: translate(-50%, -50%) scale(0.35) rotate(var(--r)); }
+    16%  { opacity: 1; transform: translate(-50%, -50%) scale(1) rotate(var(--r)); }
+    100% { opacity: 0; transform: translate(-50%, -60%) scale(0.9) rotate(var(--r)); }
+  }
+
+  /* content */
+  .wrap {
+    position: relative; z-index: 10; min-height: 100dvh;
+    display: grid; place-content: center; text-align: center;
+    padding: 40px 24px; gap: 4px;
+  }
+  .brand {
+    display: inline-flex; align-items: center; gap: 10px; justify-self: center;
+    text-decoration: none; color: var(--cream); margin-bottom: 22px;
+  }
+  .brand img { width: 40px; height: 40px; }
+  .brand span { font-family: var(--font-display); font-weight: 700; font-size: 1.05rem; line-height: 1; text-align: left; }
+  .kicker {
+    font-family: var(--font-mono); color: var(--saffron); font-size: 0.82rem;
+    letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: 14px;
+  }
+  h1 {
+    font-family: var(--font-display); font-weight: 800; letter-spacing: -0.02em;
+    font-size: clamp(2.6rem, 8vw, 5.4rem); line-height: 0.98;
+  }
+  .sub { color: var(--muted); font-size: clamp(1rem, 2.6vw, 1.18rem); max-width: 46ch; margin: 20px auto 0; line-height: 1.5; }
+  .cta { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 32px; }
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    padding: 13px 26px; border-radius: 999px; font-weight: 600; font-size: 0.96rem;
+    text-decoration: none; cursor: pointer; border: 0; transition: transform 0.15s, filter 0.15s;
+  }
+  .btn:hover { transform: translateY(-1px); }
+  .btn-primary { background: var(--saffron); color: #241B04; }
+  .btn-primary:hover { filter: brightness(1.05); }
+  .btn-ghost { background: transparent; color: var(--cream); box-shadow: inset 0 0 0 1.5px var(--line); }
+  .btn-ghost:hover { box-shadow: inset 0 0 0 1.5px var(--saffron); }
+  .hint { margin-top: 30px; color: var(--muted); font-size: 0.82rem; font-family: var(--font-mono); }
+  @media (hover: none) { .hint { display: none; } }
+</style>
+</head>
+<body>
+
+<div class="ghost" aria-hidden="true">404</div>
+
+<div class="stills" aria-hidden="true">
+  <img class="still s1" src="/assets/site/dish-mutton-mandi.webp" alt="" loading="lazy" />
+  <img class="still s2" src="/assets/site/dish-tandoori-chicken.webp" alt="" loading="lazy" />
+  <img class="still s3" src="/assets/site/dish-mixed-tandoori-platter.webp" alt="" loading="lazy" />
+  <img class="still s4" src="/assets/site/dish-naan-breads.webp" alt="" loading="lazy" />
+  <img class="still s5" src="/assets/gallery/g12-jamun-syrup.webp" alt="" loading="lazy" />
+</div>
+
+<div id="trail" aria-hidden="true"></div>
+
+<main class="wrap">
+  <a class="brand" href="/">
+    <img src="/assets/logo/logo-mark.webp" alt="" width="40" height="40" />
+    <span>Hyderabad<br/>Biryani House</span>
+  </a>
+  <p class="kicker">Error 404</p>
+  <h1>This dish isn't<br/>on the menu.</h1>
+  <p class="sub">The page you were after has left the pass — but the pot is still on. Let's get you back to the good stuff.</p>
+  <div class="cta">
+    <a class="btn btn-primary" href="/#menu">Back to the menu</a>
+    <a class="btn btn-ghost" href="tel:+18139882220">Call (813) 988-2220</a>
+  </div>
+  <p class="hint">Move your cursor — dinner's chasing you.</p>
+</main>
+
+<script>
+(function () {
+  var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var hover = matchMedia("(hover: hover) and (pointer: fine)").matches;
+  if (reduce || !hover) return; // stills + backdrop carry it on touch / reduced motion
+
+  var IMAGES = [
+    "/assets/site/dish-chicken-dam-biryani.webp",
+    "/assets/site/dish-mutton-mandi.webp",
+    "/assets/site/dish-tandoori-chicken.webp",
+    "/assets/site/dish-mixed-tandoori-platter.webp",
+    "/assets/site/dish-chicken-malai-kabab.webp",
+    "/assets/site/dish-whole-fish-mandi.webp",
+    "/assets/site/dish-naan-breads.webp",
+    "/assets/plates/plate-chicken-dam-biryani.webp",
+    "/assets/plates/plate-mutton-mandi.webp",
+    "/assets/plates/plate-tandoori-chicken.webp",
+    "/assets/gallery/g04-biryani-open.webp",
+    "/assets/gallery/g12-jamun-syrup.webp"
+  ];
+  IMAGES.forEach(function (s) { var p = new Image(); p.src = s; }); // warm the cache
+
+  var layer = document.getElementById("trail");
+  var POOL = 18, GAP = 68;
+  var pool = [], slot = 0, imgIdx = 0;
+  var lastX = 0, lastY = 0, moved = 0, primed = false;
+
+  for (var i = 0; i < POOL; i++) {
+    var im = document.createElement("img");
+    im.className = "trail-img"; im.decoding = "async"; im.alt = "";
+    layer.appendChild(im); pool.push(im);
+  }
+
+  function spawn(x, y) {
+    var im = pool[slot % POOL]; slot++;
+    im.src = IMAGES[imgIdx % IMAGES.length]; imgIdx++;
+    im.style.left = x + "px"; im.style.top = y + "px";
+    im.style.setProperty("--r", (Math.random() * 26 - 13).toFixed(1) + "deg");
+    im.classList.remove("is-live");
+    void im.offsetWidth; // restart the animation
+    im.classList.add("is-live");
+  }
+
+  addEventListener("pointermove", function (e) {
+    if (e.pointerType === "touch") return;
+    if (!primed) { lastX = e.clientX; lastY = e.clientY; primed = true; return; }
+    var dx = e.clientX - lastX, dy = e.clientY - lastY;
+    moved += Math.sqrt(dx * dx + dy * dy);
+    lastX = e.clientX; lastY = e.clientY;
+    if (moved >= GAP) { moved = 0; spawn(e.clientX, e.clientY); }
+  }, { passive: true });
+})();
+</script>
+</body>
+</html>
