@@ -13,6 +13,51 @@
     : o.payment === "counter" ? "Pay at table"
     : "Cash";
 
+  /* toast so order-action failures are never silent, and a non-blocking reject
+     dialog so Reject doesn't depend on a native prompt() (blocked on some
+     browsers/phones — a common reason it looks like nothing happens). */
+  let toastTimer = null;
+  function toast(msg, isError) {
+    let el = $("#admin-toast");
+    if (!el) {
+      el = document.createElement("div");
+      el.id = "admin-toast";
+      el.className = "admin-toast";
+      document.body.appendChild(el);
+    }
+    el.textContent = msg;
+    el.classList.toggle("is-error", !!isError);
+    el.classList.add("is-show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => el.classList.remove("is-show"), 3800);
+  }
+
+  function askRejectReason(o) {
+    return new Promise((resolve) => {
+      const scrim = document.createElement("div");
+      scrim.className = "admin-modal-scrim";
+      scrim.innerHTML = `
+        <div class="admin-modal" role="dialog" aria-modal="true" aria-label="Reject order">
+          <h3>Reject ${esc(o.id)}?</h3>
+          <p>${esc(o.name)}${o.phone ? " · " + esc(o.phone) + " — call to let them know" : ""}</p>
+          <textarea class="admin-modal-reason" rows="2" maxlength="200" placeholder="Reason (optional — shows on the receipt)"></textarea>
+          <div class="admin-modal-actions">
+            <button class="btn btn-ghost" type="button" data-act="cancel">Cancel</button>
+            <button class="btn btn-reject" type="button" data-act="ok">Reject order</button>
+          </div>
+        </div>`;
+      document.body.appendChild(scrim);
+      const ta = scrim.querySelector(".admin-modal-reason");
+      setTimeout(() => ta.focus(), 30);
+      const close = (val) => { document.removeEventListener("keydown", onKey); scrim.remove(); resolve(val); };
+      const onKey = (e) => { if (e.key === "Escape") close(null); };
+      document.addEventListener("keydown", onKey);
+      scrim.addEventListener("click", (e) => { if (e.target === scrim) close(null); });
+      scrim.querySelector('[data-act="cancel"]').addEventListener("click", () => close(null));
+      scrim.querySelector('[data-act="ok"]').addEventListener("click", () => close(ta.value.trim()));
+    });
+  }
+
   let token = sessionStorage.getItem("hbh-admin-token") || null;
   let role = sessionStorage.getItem("hbh-admin-role") || null;
   let pollTimer = null;
@@ -209,14 +254,19 @@
   }
 
   async function patchOrder(id, body) {
-    try { await api("/api/admin/orders/" + encodeURIComponent(id), { method: "PATCH", body: JSON.stringify(body) }); }
-    catch (e) {}
+    try {
+      await api("/api/admin/orders/" + encodeURIComponent(id), { method: "PATCH", body: JSON.stringify(body) });
+    } catch (e) {
+      /* don't nag when it's just an expired session (api() already signs out) */
+      if (e.message !== "Signed out") toast("Couldn't update the order — " + e.message, true);
+    }
     refreshOrders();
   }
   const setStatus = (id, status, extra) => patchOrder(id, { status, ...(extra || {}) });
 
   $("#clear-done").addEventListener("click", async () => {
-    try { await api("/api/admin/orders/clear-done", { method: "POST" }); } catch (e) {}
+    try { await api("/api/admin/orders/clear-done", { method: "POST" }); }
+    catch (e) { if (e.message !== "Signed out") toast("Couldn't clear the board — " + e.message, true); }
     refreshOrders();
   });
 
@@ -293,11 +343,11 @@
       const reject = document.createElement("button");
       reject.className = "btn btn-reject";
       reject.textContent = "Reject";
-      reject.addEventListener("click", () => {
-        const reason = prompt(`Reject order ${o.id} from ${o.name}?\n\nReason (goes on the receipt — call ${o.phone} to let them know):`, "");
+      reject.addEventListener("click", async () => {
+        const reason = await askRejectReason(o);
         if (reason === null) return; // cancelled
         reject.disabled = true;
-        setStatus(o.id, "rejected", { rejectReason: reason.trim() });
+        setStatus(o.id, "rejected", { rejectReason: reason });
       });
       row.append(accept, reject);
       el.appendChild(row);

@@ -299,3 +299,31 @@ h1, h2 { font-family: var(--font-display); letter-spacing: -0.01em; }
 .switch input:checked + i { background: var(--ok); }
 .switch input:checked + i::after { transform: translateX(20px); background: #fff; }
 .switch input:focus-visible + i { outline: 2px solid var(--saffron); outline-offset: 2px; }
+
+/* order-action feedback: toast (failures never silent) + reject dialog */
+.admin-toast {
+  position: fixed; left: 50%; bottom: 26px; transform: translate(-50%, 20px);
+  background: var(--cream); color: var(--char); padding: 12px 20px; border-radius: 10px;
+  font-weight: 600; font-size: 0.9rem; max-width: min(90vw, 460px); text-align: center;
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.4); opacity: 0; pointer-events: none; z-index: 300;
+  transition: opacity 0.2s, transform 0.2s;
+}
+.admin-toast.is-show { opacity: 1; transform: translate(-50%, 0); }
+.admin-toast.is-error { background: #E86A5E; color: #fff; }
+.admin-modal-scrim {
+  position: fixed; inset: 0; background: rgba(3, 18, 11, 0.6); z-index: 320;
+  display: grid; place-items: center; padding: 20px;
+}
+.admin-modal {
+  background: var(--soot); border: 1px solid var(--line); border-radius: 14px;
+  padding: 20px; width: min(94vw, 420px); display: grid; gap: 12px;
+}
+.admin-modal h3 { font-size: 1.1rem; }
+.admin-modal p { color: var(--muted); font-size: 0.88rem; }
+.admin-modal-reason {
+  background: var(--char); border: 1.5px solid var(--line); border-radius: 10px;
+  color: var(--cream); font-family: var(--font-body); font-size: 1rem;
+  padding: 10px 12px; width: 100%; resize: vertical;
+}
+.admin-modal-reason:focus { outline: none; border-color: var(--saffron); }
+.admin-modal-actions { display: flex; justify-content: flex-end; gap: 10px; }
