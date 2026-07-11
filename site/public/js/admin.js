@@ -316,11 +316,10 @@
     el.className = "order" + (o.status === "new" ? " is-new" : "") + (dineIn ? " is-dinein" : "");
     const t = new Date(o.placedAt).toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
     el.innerHTML = `
+      ${dineIn ? `<div class="table-banner"><span>🍽 Table</span><b>${esc(o.table)}</b></div>` : ""}
       <div class="order-top">
         <span class="order-id">${esc(o.id)}</span>
-        ${dineIn
-          ? `<span class="type-badge is-table">🍽 Table ${esc(o.table)}</span>`
-          : `<span class="type-badge is-pickup">🥡 Pickup</span>`}
+        ${dineIn ? "" : `<span class="type-badge is-pickup">🥡 Pickup</span>`}
       </div>
       <div class="order-time">${t}${dineIn ? " · dine-in" : " · pickup " + esc(o.pickupTime)}</div>
       <div class="order-who">${esc(o.name)}${o.phone ? `<a href="tel:${esc(o.phone)}">${esc(o.phone)}</a>` : ""}</div>
